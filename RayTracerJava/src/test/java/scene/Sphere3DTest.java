@@ -1,10 +1,8 @@
 package scene;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import util.ColorValue;
 import util.Dir3D;
@@ -13,14 +11,6 @@ import util.Util;
 import util.Vector3D;
 
 public class Sphere3DTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public final void testSphere3D() throws Exception {

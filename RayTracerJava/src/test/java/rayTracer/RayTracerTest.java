@@ -1,15 +1,10 @@
 package rayTracer;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RayTracerTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testMain() throws Exception {
