@@ -17,6 +17,6 @@ public interface ReflectedColor {
 	 * @param inColor
 	 * @return {@link Color} Farbe des reflektierten Strahls. 
 	 */
-	public Color getReflection(Intersection inIntersection,Color inColor);
+	public Color getColor(Intersection inIntersection,Color inColor);
 	
 }

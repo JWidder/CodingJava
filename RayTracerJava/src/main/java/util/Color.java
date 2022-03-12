@@ -107,18 +107,35 @@ public class Color {
 	}
 	
 	/**
+	 * Abschwächen eines Lichtstrahls um einen Faktor typisch aus dem 
+	 * Bereich [0...1.0]. 
+	 * Falls der Faktor größer als 1 ist, wird der Farbwert auf 255 limitiert.
+	 * Anmerkung: Falls nicht alle Farben gleich limitiert werden, dass 
+	 * führt dies zu einer Farbverschiebung.
 	 * 
+	 * @param inFactor Faktor mit dem der Lichtstrahl abgeschwächt wurde.
+	 * @return abgeschwächter Lichtstrahl. 
+	 */
+	public Color reduceColor(double inFactor) {
+		for (int i=0;i<3;i++) {
+			this.colorValue[i] = (int)Math.min(this.colorValue[i]*inFactor,255.0);
+		}		
+		return this;
+	}
+	/**
+	 * Dieser Lichtstrahl wird an einer farbigen Oberfläche reflektiert und
+	 * verändert dadurch entsprechend seine Farbe.
 	 * 
 	 * @param inColor
 	 * @return
 	 */
 	public Color refelctColor(Color inColor) {
-		Color result = new Color();
+		// Color result = new Color();
 		for (int i=0;i<3;i++) {
 			double factor=this.colorValue[i]/255.0;
-			result.colorValue[i] = (int) (factor*inColor.getColorValue(i));
+			this.colorValue[i] = (int) (factor*inColor.getColorValue(i));
 		}
-		return (result);
+		return (this);
 	}
 	
 	/**

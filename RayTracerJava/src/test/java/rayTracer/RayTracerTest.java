@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author johan
+ * @author Johannes Widder
  *
  */
 public class RayTracerTest {

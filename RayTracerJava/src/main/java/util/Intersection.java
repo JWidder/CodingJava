@@ -71,7 +71,7 @@ public class Intersection {
 			
 			// add ambient color
 			// result.addColor(this.getRefElement().getAmbientLight());
-			return this.getRefElement().getLightShading().getReflection(this, inColor);
+			return this.getRefElement().getLightShading().getColor(this, inColor);
 		}
 		else {
 			// return black. No intersection with any scene element

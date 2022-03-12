@@ -63,7 +63,38 @@ public class ColorTest {
 		}
 
 	}
-	
+
+	@Nested
+	class testReduceColor{
+		/**
+		 * Normalfall, der Wert das Farbvektors halbiert.
+		 */
+		@Test
+		public void testReduceColor_Normal() {
+			Color refColor = new Color(100,120,140);
+			
+			Color result = refColor.reduceColor (0.5);
+			
+			assertEquals(50, result.getColorValues()[0]);
+			assertEquals(60, result.getColorValues()[1]);
+			assertEquals(70, result.getColorValues()[2]);
+		}		
+
+		/**
+		 * Der Faktor ist größer 1.0 dadurch muss der größte Wert auf 255
+		 * limitiert werden. 
+		 */
+		@Test
+		public void testReduceColor_Limited() {
+			Color refColor = new Color(100,120,140);
+			
+			Color result = refColor.reduceColor (2.0);
+			
+			assertEquals(200, result.getColorValues()[0]);
+			assertEquals(240, result.getColorValues()[1]);
+			assertEquals(255, result.getColorValues()[2]);
+		}		
+	}
 
 	@Nested
 	class testAddColor{

@@ -29,7 +29,7 @@ package util;
  * @author Johannes Widder
  */
 public class BasicColorCalculation implements ReflectedColor {
-	double refAmbient; 
+	ReflectedColor ambientColor; 
 	
 	/**
 	 * @param refSpectacular
@@ -38,7 +38,7 @@ public class BasicColorCalculation implements ReflectedColor {
 	 * @param alpha
 	 */
 	public BasicColorCalculation(double refAmbient) {
-		this.refAmbient=refAmbient; 
+		this.ambientColor=new AmbientColor(refAmbient);
 	}
 	
 	/**
@@ -48,49 +48,9 @@ public class BasicColorCalculation implements ReflectedColor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Color getReflection(Intersection inIntersection,Color inColor) {
-		Color result = new Color();
-
-		result.addColor(this.addReflection(inIntersection,inColor));
-		result.addColor(this.addShade(inIntersection));
-		result.addColor(this.addAmbient(inIntersection));
-		
-//		result=inColor.reflectColor(this.refSpectacular);
-//		re
-//		
-//		Color ambientColor=new Color(inIntersection.getRefElement().getValueColor());
-//		for (int i=0;i<3;i++) {
-//			int test1 = inIntersection.getRefElement().getAmbientLight().getColorValue(i);
-//			double faktor = (double)test1/255.0;
-//			int test2 = (int) (inIntersection.getRefElement().getValueColor().getColorValue(i)*faktor);
-//		}
-//		result.addColor(ambientColor);
+	public Color getColor(Intersection inIntersection,Color inColor) {
+		Color result = this.ambientColor.getColor(inIntersection, null);
 		return result;
 		
-	}
-	
-	/**
-	 * Ambient zweitg 
-	 * 
-	 * @param inIntersection
-	 * @return
-	 */
-	Color addAmbient(Intersection inIntersection) {
-		Color result;
-		result=inIntersection.getRefElement().getValueColor();
-		result = result.refelctColor(inIntersection.getRefElement().getAmbientLight());
-		return result;
-	}
-
-	private Color addShade(Intersection inIntersection) {
-		Color result = new Color();
-		return result;
-	}
-
-	private Color addReflection(Intersection inIntersection, Color inColor) {
-		Color result;
-		result=inIntersection.getRefElement().getValueColor();
-		result.refelctColor(inColor);
-		return result;
 	}
 }

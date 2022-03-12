@@ -14,7 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
- * Ermitteln der Farbe des Reflektierten Strahls durch die Klasse 
+ * Ermitteln der Farbe des reflektierten Strahls durch die Klasse
+ *  
  * @see util.BasicColorCalculation.
  * 
  * @author Johannes Widder
@@ -36,35 +37,15 @@ public class BasicColorCalculationTest {
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
 			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,100,100));			
 			
-			Color testColor = testPhongShading.getReflection(refIntersection, new Color(0, 0, 0));
+			Color testColor = testPhongShading.getColor(refIntersection, new Color(0, 0, 0));
 
-			assertEquals(testColor.getColorValues()[0], 100);
-			assertEquals(testColor.getColorValues()[1], 100);
-			assertEquals(testColor.getColorValues()[2], 100);
+			assertEquals(testColor.getColorValues()[0], 10);
+			assertEquals(testColor.getColorValues()[1], 10);
+			assertEquals(testColor.getColorValues()[2], 10);
 		}
 		
 	}
 
-	
-	@Nested
-	public class test_PhongShading_addAmbient{
-
-		@Test
-		public void test_addAmbient_normal() {
-
-			BasicColorCalculation testPhongShading = new BasicColorCalculation(0.1);
-			
-			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
-			when(refIntersection.getRefElement().getAmbientLight()).thenReturn(new Color(128,255,0));			
-			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,100,100));
-
-			Color testColor = testPhongShading.addAmbient(refIntersection);
-
-			assertEquals(testColor.getColorValues()[0], 50);
-			assertEquals(testColor.getColorValues()[1], 100);
-			assertEquals(testColor.getColorValues()[2], 0);
-		}
-	}
 	
 	@Nested
 	public class test_PhongShading_addShade{
@@ -85,7 +66,7 @@ public class BasicColorCalculationTest {
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
 			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,100,100));
 			
-			Color testColor = testPhongShading.getReflection(refIntersection, new Color(0, 0, 0));
+			Color testColor = testPhongShading.getColor(refIntersection, new Color(0, 0, 0));
 
 			
 			
@@ -105,7 +86,7 @@ public class BasicColorCalculationTest {
 			
 			BasicColorCalculation testPhongShading = new BasicColorCalculation(0.1);
 			Color inColor = new Color(100, 110, 120);
-			Color testColor = testPhongShading.getReflection(refIntersection, inColor);
+			Color testColor = testPhongShading.getColor(refIntersection, inColor);
 
 			assertEquals(testColor.getColorValues()[0], 0);
 			assertEquals(testColor.getColorValues()[1], 0);
