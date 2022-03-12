@@ -21,26 +21,22 @@ public enum ColorValue {
 
 	private final Integer red, green, blue;
 
-	public String getRGB() {
-		return red + "," + green + "," + blue;
-	}
-	
     public int getRedValue() {
-        return red;
+        return this.red;
     }
 
     public int getBlueValue() {
-        return blue;
+        return this.blue;
     }
 
     public int getGreenValue() {
-        return green;
+        return this.green;
     }
 
-    @Override
-    public String toString() {
-        return red + "," + green + "," + blue;
-    }
+//    @Override
+//    public String toString() {
+//        return red + "," + green + "," + blue;
+//    }
 }
 
 //public class  helloWorld{

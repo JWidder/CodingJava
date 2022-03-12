@@ -1,12 +1,17 @@
 package util;
 
+import scene.LightRay;
+
+/**
+ * @author Johannes Widder
+ *
+ */
 public class Util{
 	/**
 	 * 
 	 * 
-	 * @param strahl
-	 * @param kugel
-	 * @return
+	 * @param vector 
+	 * @return double
 	 */
 	public static double getLength(Dir3D vector)
 	{
@@ -21,6 +26,11 @@ public class Util{
 		return result;
 	}
 	
+	/**
+	 * @param inV1
+	 * @param inV2
+	 * @return {@link util.Dir3D}
+	 */
 	public static Dir3D difference(Dir3D inV1,Dir3D inV2)
 	{
 		Dir3D result = new Dir3D();
@@ -30,15 +40,25 @@ public class Util{
 		return result;
 	}
 
+	/**
+	 * @param inV1
+	 * @param inV2
+	 * @return {@link util.Dir3D}
+	 */
 	public static Dir3D difference(Point3D inV1,Point3D inV2)
 	{
-		Dir3D result = new Dir3D();
+		Dir3D result = new Dir3D(1.0,0.0,0.0);
 		result.setxDir(inV1.getxPos()-inV2.getxPos());
 		result.setyDir(inV1.getyPos()-inV2.getyPos());
 		result.setzDir(inV1.getzPos()-inV2.getzPos());
 		return result;
 	}
 	
+	/**
+	 * @param a
+	 * @param b
+	 * @return double 
+	 */
 	public static double dot(Dir3D a,Dir3D b)
 	{
 		double wert=0.0;
@@ -53,15 +73,15 @@ public class Util{
 	 * 
 	 * @param a
 	 * @param b
-	 * @return normal 
+	 * @return {@link util.Dir3D}
 	 */
 	public static Dir3D normalVector(Dir3D a,Dir3D b)
 	{
 		Dir3D result = new Dir3D();
 		
-		result.xDir = (a.yDir * b.zDir) - (a.zDir * b.yDir);
-		result.yDir = (a.zDir * b.xDir) - (a.xDir * b.zDir);
-		result.zDir = (a.xDir * b.yDir) - (a.yDir * b.xDir);
+		result.setxDir((a.getyDir() * b.getzDir()) - (a.getzDir() * b.getyDir()));
+		result.setyDir((a.getzDir() * b.getxDir()) - (a.getxDir() * b.getzDir()));
+		result.setzDir((a.getxDir() * b.getyDir()) - (a.getyDir() * b.getxDir()));
 		
 		return result;	
 	}
@@ -70,7 +90,7 @@ public class Util{
 	 * 
 	 * @param normal Normalenverctorr an dem Schnittpunkt 
 	 * @param inRay
-	 * @return
+	 * @return {@link util.Dir3D}
 	 */
 	public static Dir3D reflect (Dir3D normal, Dir3D inRay)
 	{
@@ -80,4 +100,26 @@ public class Util{
 		return rn;
 	}
 	
+	
+	/**
+	 * Beschreibung des Algoritmus zur Berechnung des reflektierten Strahls. 
+	 * https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
+	 * 
+	 * @param lightRay 
+	 * @param nextIntersection
+	 * 
+	 * @return {@link scene.LightRay} reflected ray
+	 */
+	public static LightRay getNextRay(LightRay lightRay, Intersection nextIntersection) {
+
+		Point3D point = nextIntersection.getIntersectionPoint();
+		Dir3D n = nextIntersection.getRefElement().getNormal(point).getDirection().normalize();
+		Dir3D ri = lightRay.getDirection().normalize();
+		double f = Util.dot(ri, n);
+		// https://www.it-swarm.com.de/de/java/wie-erreicht-man-eine-verkettung-von-methoden-java/1043854209/
+		Dir3D rn = ri.minus(n.scale(f).scale(2.0));
+		
+		LightRay newRay = new LightRay(nextIntersection.getIntersectionPoint(),rn);
+		return newRay;
+	}	
 }

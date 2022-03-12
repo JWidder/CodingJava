@@ -4,12 +4,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * @author Johannes Widder
+ *
+ */
 public class OutputPictureTest {
 
+	/**
+	 * @throws Exception
+	 */
 	@Test
 	public void testOutputPicture() throws Exception {
 		int xLen=800;
 		int yLen=600;
+		@SuppressWarnings("nls")
 		OutputPicture output = new OutputPicture("test_output_picture.ppm", xLen,yLen);
 		
 		for (int yi=0;yi<yLen;yi++)
@@ -22,7 +30,7 @@ public class OutputPictureTest {
 				}
 				else if ((yi<0.2*yLen) & (xi>=0.2*xLen))
 				{
-					output.writePoint(ColorValue.RED);
+					output.writePoint (ColorValue.RED);
 				}
 				else if ((yi>=0.2*yLen) & (xi<0.2*xLen))
 				{
@@ -38,10 +46,14 @@ public class OutputPictureTest {
 		assertEquals(1,1);
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	@Test
 	public void testOutputCircle() throws Exception {
 		int xLen=800;
 		int yLen=600;
+		@SuppressWarnings("nls")
 		OutputPicture output = new OutputPicture("test_output_circle.ppm", xLen,yLen);
 		
 		double x_2=(double)xLen/2.0;

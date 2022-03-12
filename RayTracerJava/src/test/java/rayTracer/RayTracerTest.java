@@ -4,12 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * @author johan
+ *
+ */
 public class RayTracerTest {
 
+	/**
+	 * @throws Exception
+	 */
 	@Test
 	public void testMain() throws Exception {
 		// TODO Test erstellen
-		assertEquals(1,1);
+		String[] testData=new String[3];
+		RayTracer.main(testData);
+		assertEquals(2,2);
 	}
 
 }

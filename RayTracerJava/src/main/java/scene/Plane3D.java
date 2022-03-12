@@ -3,10 +3,15 @@ package scene;
 import util.Color;
 import util.ColorValue;
 import util.Dir3D;
+import util.Intersection;
 import util.Point3D;
 import util.Vector3D;
 
-public class Plane3D implements Element {
+/**
+ * @author Johannes Widder
+ *
+ */
+public class Plane3D extends SceneElement {
 	Dir3D dir_1;
 	Dir3D dir_2;
 	Point3D base;
@@ -39,12 +44,10 @@ public class Plane3D implements Element {
 		this.base = base;
 	}
 
-
-
 	@Override
-	public double intersectRay(Vector3D inRay) {
+	public Intersection intersectRay(LightRay inRay) {
 		// TODO Auto-generated method stub
-		return 0.0;
+		return null;
 	}
 
 
@@ -66,9 +69,9 @@ public class Plane3D implements Element {
 
 
 	@Override
-	public double getValueReflection() {
+	public ISceneElement move(Dir3D dir) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }

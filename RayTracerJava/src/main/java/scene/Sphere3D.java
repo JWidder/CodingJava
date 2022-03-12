@@ -3,25 +3,32 @@ package scene;
 import util.Color;
 import util.ColorValue;
 import util.Dir3D;
+import util.Intersection;
 import util.Point3D;
+import util.ReflectedColor;
 import util.Util;
 import util.Vector3D;
 
-public class Sphere3D implements Element{
+/**
+ * @author Johannes Widder
+ *
+ */
+public class Sphere3D extends SceneElement{
 	Point3D mittelPunkt;
 	double radius;
 	Color valueColor;
-	double valueReflection;
 
 	/**
 	 * @param mittelPunkt
 	 * @param radius
+	 * @param valueColors 
+	 * @param inShading 
 	 */
-	public Sphere3D(Point3D mittelPunkt, double radius, ColorValue valueColors) {
+	public Sphere3D(Point3D mittelPunkt, double radius, ColorValue valueColors, ReflectedColor inShading) {
 		this.mittelPunkt = mittelPunkt;
 		this.radius = radius;
-		this.valueReflection=0.9;
 		this.valueColor= new Color(valueColors);
+		this.ligthShading=inShading;
 	}
 	
 	/**
@@ -43,8 +50,8 @@ public class Sphere3D implements Element{
 	 *   t^2 * dot(B,B) + 2*t*dot(B,A-C) + dot((A-C),(A-C)) - r^2 = 0  
 	 *   
 	 *   a = dot(B,B)
-	 *   b = 2 * t * dot(B,A-C)
-	 *   c = dot((A-C),(A-C))
+	 *   b = 2 * dot(B,A-C)
+	 *   c = dot((A-C),(A-C)) - r^2
 	 *   
 	 * Aufloesen mit der klassischen ab-Formel ergibt
 	 *   t1 = (-b + sqrt(b^2 - 4* a *c))/2*a
@@ -53,10 +60,10 @@ public class Sphere3D implements Element{
 	 * 
 	 * Selection of the real intersection point. b 
 	 * 
-	 * @param ray 
-	 * @return NULL in case no intersection or Intersection object if there is an intersection.
+	 * @param inRay 
+	 * @return {@link util.Intersection} in case no intersection or Intersection object if there is an intersection.
 	 */
-	public double intersectRay(Vector3D inRay)
+	public Intersection intersectRay(LightRay inRay)
 	{
 		// A ray.getBasis()
 		// B ray.getDirection()
@@ -64,14 +71,14 @@ public class Sphere3D implements Element{
 		// r this.radius
 				
 		double temp_a = Util.dot(inRay.getDirection(),inRay.getDirection());
-		double temp_b = 2.0 * Util.dot(inRay.getDirection(), Util.difference(inRay.getBasis(), this.mittelPunkt));
 		Dir3D temp_dir = Util.difference(inRay.getBasis(), this.mittelPunkt);
+		double temp_b = 2.0 * Util.dot(inRay.getDirection(), temp_dir);
 		double temp_c = Util.dot(temp_dir,temp_dir) - this.radius * this.radius;
 		
 		double discriminante = (temp_b * temp_b) - (4 * temp_a * temp_c);
 		if (discriminante<0.0) 
 		{
-			return Double.MAX_VALUE;
+			return new Intersection(Double.MAX_VALUE, this, null,inRay );
 		}
 		else
 		{
@@ -79,43 +86,56 @@ public class Sphere3D implements Element{
 			if (discriminante==0.0)
 			{
 				t = -temp_b / (2 * temp_a);
-				return t;
+				return new Intersection(t, this, inRay.getPoint(t),inRay);
 			}
 			else
 			{
-				double t1 = (-temp_b + Math.sqrt(discriminante)) / (2 * temp_a);	
-				double t2 = (-temp_b - Math.sqrt(discriminante)) / (2 * temp_a);
-				if (t2>=1.0)	// Intersection outside Screen
+				double t1 = (-temp_b - Math.sqrt(discriminante)) / (2 * temp_a);	
+				double t2 = (-temp_b + Math.sqrt(discriminante)) / (2 * temp_a);
+				if (t2 >=1.0)	// Intersection outside Screen
 				{
-					return t2;
+					Point3D schnittPunkt = inRay.getPoint(t1);
+					return new Intersection(t1, this, schnittPunkt,inRay);
 				}
-				else if ((t2<1.0)&&(t1>=1.0)) // Object interferes with the screen.
+				else if ((t1<1.0)&&(t2>=1.0)) // Object interferes with the screen.
 				{
-					return t2;
+					Point3D schnittPunkt = inRay.getPoint(t2);
+					return new Intersection(t2, this, schnittPunkt,inRay);
 				}
 				else // No intersection in the allowed area.
 				{
-					return Double.MAX_VALUE;
+					return new Intersection(Double.MAX_VALUE, this, null,inRay );
 				}
 			}
 		}
 	}
-	
-	public boolean doesIntersectRay(Vector3D ray)
+
+	/**
+	 * Schnelles ermitteln, ob ein Strahl eine Kugelschneidet. 
+	 * Diese Methode ist für die Schattenberechnung notwendig. 
+	 * 
+	 * Quelle und Beschreibung
+	 * http://kylehalladay.com/blog/tutorial/math/2013/12/24/Ray-Sphere-Intersection.html
+	 * 
+	 * @param inRay 
+	 * @return boolean Infomation ob der Strahl die Kugelk schneidet. 
+	 */
+	public boolean doesIntersectRay(LightRay inRay)
 	{
-		Dir3D temp = Util.difference(this.getMittelPunkt(),ray.getBasis());
-		double wert1=Util.dot(temp, ray.getDirection());
-		double wert2=Util.dot(ray.getDirection(),ray.getDirection());
-		double parameter=wert1/wert2;
-		
-		Point3D nextPoint=ray.getPoint(parameter);
-		Dir3D richtung = Util.difference(nextPoint, this.getMittelPunkt());
-		
-		double abstand=Util.getLength(richtung);
-		
-		boolean result = abstand <= this.getRadius();
-		
-		return result;	
+		Dir3D abstand = Util.difference(this.mittelPunkt,inRay.getBasis());
+		double abstand_lotpunkt=Util.dot(abstand, inRay.getDirection());
+		if (abstand_lotpunkt<0) {
+			return false;
+		}
+		else
+		{
+			double d2=abstand.len2()-(abstand_lotpunkt*abstand_lotpunkt);
+			double radius2=this.radius*this.radius;
+			if (d2>radius2) {
+				return false;	
+			}
+		}
+		return true;
 	}; 
 
 	
@@ -128,22 +148,19 @@ public class Sphere3D implements Element{
 	}
 
 	public Color getValueColor() {
-		return valueColor;
+		return this.valueColor;
 	}
 
 	@Override
 	public Vector3D getNormal(Point3D inPoint) {
-		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, mittelPunkt));
+		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, this.mittelPunkt));
 		normale.normalize();
 		return normale;
 	}
 
 	@Override
-	public double getValueReflection() {
-		return valueReflection;
-	}
-
-	public void setValueReflection(double valueReflection) {
-		this.valueReflection = valueReflection;
+	public ISceneElement move(Dir3D dir) {
+		this.mittelPunkt.movePoint(dir);
+		return this;
 	}
 }
