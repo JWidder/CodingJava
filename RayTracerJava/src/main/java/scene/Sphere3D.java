@@ -5,9 +5,10 @@ import util.ColorValue;
 import util.Dir3D;
 import util.Intersection;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Util;
 import util.Vector3D;
+import util.Material;
 
 /**
  * @author Johannes Widder
@@ -24,11 +25,12 @@ public class Sphere3D extends SceneElement{
 	 * @param valueColors 
 	 * @param inShading 
 	 */
-	public Sphere3D(Point3D mittelPunkt, double radius, ColorValue valueColors, ReflectedColor inShading) {
+	public Sphere3D(Point3D mittelPunkt, double radius, ColorValue valueColors, ColorCalculation inShading, Material inMaterial) {
 		this.mittelPunkt = mittelPunkt;
 		this.radius = radius;
 		this.valueColor= new Color(valueColors);
 		this.ligthShading=inShading;
+		this.typMaterial=inMaterial;
 	}
 	
 	/**
@@ -63,6 +65,7 @@ public class Sphere3D extends SceneElement{
 	 * @param inRay 
 	 * @return {@link util.Intersection} in case no intersection or Intersection object if there is an intersection.
 	 */
+	@Override
 	public Intersection intersectRay(LightRay inRay)
 	{
 		// A ray.getBasis()
@@ -147,6 +150,7 @@ public class Sphere3D extends SceneElement{
 		return this.radius;
 	}
 
+	@Override
 	public Color getValueColor() {
 		return this.valueColor;
 	}

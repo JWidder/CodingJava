@@ -1,11 +1,8 @@
 package generator;
 
-import java.util.ArrayList;
-
 import scene.LightRay;
 import scene.Scene;
 import util.Color;
-import util.ColorValue;
 import util.Intersection;
 import util.OutputPicture;
 import util.Point3D;

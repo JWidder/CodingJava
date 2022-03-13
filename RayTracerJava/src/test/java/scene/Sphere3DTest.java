@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import util.ColorValue;
 import util.Dir3D;
 import util.Intersection;
+import util.Material;
 import util.BasicColorCalculation;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Util;
 
 /**
@@ -29,9 +30,9 @@ public class Sphere3DTest {
 		public final void testSphere3D() throws Exception {
 			Point3D mittelPunkt = new Point3D();
 			double radius = 1.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D testSphere3d = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading);
+			Sphere3D testSphere3d = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading,new Material());
 			
 			assertEquals(1.0, testSphere3d.getRadius(),0.001);
 		}
@@ -44,10 +45,10 @@ public class Sphere3DTest {
 			// preparation
 			double radius=1.0;
 			Point3D center = new Point3D(1.0,2.0,3.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
 			// action
-			Sphere3D testSphere = new Sphere3D(center, radius,ColorValue.GREEN,testShading);
+			Sphere3D testSphere = new Sphere3D(center, radius,ColorValue.GREEN,testShading,new Material());
 			
 			// assert
 			assertEquals(1.0, testSphere.getRadius(),0.0001);
@@ -64,8 +65,8 @@ public class Sphere3DTest {
 
 			double radius = 1.0;
 			Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
 
 			LightRay testRay = new LightRay(new Point3D(-2.0, 0.0, 0.0), new Dir3D(1.0,0,0));
 
@@ -78,9 +79,9 @@ public class Sphere3DTest {
 		public void testIntersectionInner() throws Exception {
 			double radius = 2.5;
 			Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
 
 			Point3D cameraPos = new Point3D(-5.0, 0.0, 0.0);
 			Point3D screenPoint = new Point3D(0.0, 0.0, 0.0);
@@ -100,9 +101,9 @@ public class Sphere3DTest {
 		public void testIntersectionNone() throws Exception {
 			double radius = 2.5;
 			Point3D mittelPunkt = new Point3D(radius, 2 * radius, 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
 
 			Point3D cameraPos = new Point3D(-5.0, 0.0, 0.0);
 			Point3D screenPoint = new Point3D(0.0, 0.0, 0.0);
@@ -120,10 +121,10 @@ public class Sphere3DTest {
 		@Test
 		public void testDoesIntersectRay() {
 			double radius = 5.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
 			Point3D mittelPunkt = new Point3D(3*radius, 0.0 , 0.0);
-			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
 			LightRay testRay = new LightRay();
 			
 			boolean check = testSphere.doesIntersectRay(testRay);
@@ -135,9 +136,9 @@ public class Sphere3DTest {
 		public void testDoesNotIntersectRay() {
 			double radius = 5.0;
 			Point3D mittelPunkt = new Point3D(3*radius, 4*radius , 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
 			LightRay testRay = new LightRay();
 			
 			boolean check = testSphere.doesIntersectRay(testRay);
@@ -146,10 +147,10 @@ public class Sphere3DTest {
 		@Test
 		public void testDoesNotIntersectRay_02() {
 			double radius = 5.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
 			Point3D mittelPunkt = new Point3D(3*radius, 4*radius , 0.0);
-			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
 			LightRay testRay = new LightRay(new Point3D(),new Dir3D(10.0, 0.0, 0.0));
 			
 			boolean check = testSphere.doesIntersectRay(testRay);

@@ -14,16 +14,14 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 import util.Color;
 import util.ColorValue;
 import util.Dir3D;
 import util.Intersection;
+import util.Material;
 import util.BasicColorCalculation;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Util;
 
 /**
@@ -35,7 +33,6 @@ public class SceneTest {
 	/**
 	 * 
 	 */
-	@SuppressWarnings("nls")
 	@Test
 	public void testBuildScene() {
 		new Scene();
@@ -98,7 +95,6 @@ public class SceneTest {
 	/**
 	 * 
 	 */
-	@SuppressWarnings("nls")
 	@Test
 	public void test_buildScreen_normal() {
 		new BufferedReader(new StringReader("Sphere ( 12.0 , 12 , -12.3) , 3.1 , RED\n"
@@ -112,7 +108,6 @@ public class SceneTest {
 	/**
 	 * 
 	 */
-	@SuppressWarnings("nls")
 	@Test
 	public void testGetKey() {
 		Exception exception = assertThrows(ExceptionSyntaxError.class, () -> {
@@ -146,11 +141,11 @@ public class SceneTest {
 			final double d = 5.0 * r;
 
 			Scene testScene = new Scene();
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 			 
-			testScene.addElement(new Sphere3D(new Point3D(d, -r * 0.5 * Math.sqrt(2.0), 0), r, ColorValue.RED,testShading));
-			testScene.addElement(new Sphere3D(new Point3D(d - Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading));
-			testScene.addElement(new Sphere3D(new Point3D(d + Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading));
+			testScene.addElement(new Sphere3D(new Point3D(d, -r * 0.5 * Math.sqrt(2.0), 0), r, ColorValue.RED,testShading,new Material()));
+			testScene.addElement(new Sphere3D(new Point3D(d - Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading,new Material()));
+			testScene.addElement(new Sphere3D(new Point3D(d + Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading,new Material()));
 
 			testScene.addElement(new Light(1.0));
 
@@ -170,13 +165,13 @@ public class SceneTest {
 
 			Scene testScene = new Scene();
 			testScene.setAmbientLight(new Color(25,25,25));
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D testSphere3d1 =new Sphere3D(new Point3D(d, -r * 0.5 * Math.sqrt(2.0), 0), r, ColorValue.RED,testShading);
+			Sphere3D testSphere3d1 =new Sphere3D(new Point3D(d, -r * 0.5 * Math.sqrt(2.0), 0), r, ColorValue.RED,testShading,new Material());
 			testScene.addElement(testSphere3d1);
-			Sphere3D testSphere3d2 =new Sphere3D(new Point3D(d - Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading); 
+			Sphere3D testSphere3d2 =new Sphere3D(new Point3D(d - Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading,new Material()); 
 			testScene.addElement(testSphere3d2);
-			Sphere3D testSphere3d3=new Sphere3D(new Point3D(d + Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading);
+			Sphere3D testSphere3d3=new Sphere3D(new Point3D(d + Math.sqrt(2.0) * r, d + r * 0.5 * Math.sqrt(2.0), 0), r,ColorValue.RED,testShading,new Material());
 			testScene.addElement(testSphere3d3);
 
 			testScene.addElement(new Light(1.0));

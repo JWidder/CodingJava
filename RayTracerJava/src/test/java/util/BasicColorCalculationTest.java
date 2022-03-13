@@ -19,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @see util.BasicColorCalculation.
  * 
  * @author Johannes Widder
- * @d
  */
 @ExtendWith(MockitoExtension.class)  
 public class BasicColorCalculationTest {
@@ -27,7 +26,7 @@ public class BasicColorCalculationTest {
 	 * 
 	 */
 	@Nested
-	public class test_BasicShading_addReflection{
+	public class test_BasicColorCalculation_Ambient{
 
 		@Test
 		public void test_addReflection_normal() {
@@ -48,7 +47,7 @@ public class BasicColorCalculationTest {
 
 	
 	@Nested
-	public class test_PhongShading_addShade{
+	public class test_BasicColorCalculation_addShade{
 		@Test
 		public void test_addShade_normal() {
 			assertEquals(1,1);
@@ -56,41 +55,25 @@ public class BasicColorCalculationTest {
 	}
 	
 	@Nested
-	public class test_PhongShading_Reflection {
-
-		@Test
-		public void testGetReflectionBlack() {
-
-			BasicColorCalculation testPhongShading = new BasicColorCalculation(0.1);
-
-			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
-			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,100,100));
-			
-			Color testColor = testPhongShading.getColor(refIntersection, new Color(0, 0, 0));
-
-			
-			
-//			assertEquals(testColor.getColorValues()[0], 100);
-//			assertEquals(testColor.getColorValues()[1], 100);
-//			assertEquals(testColor.getColorValues()[2], 100);
-		}
+	public class test_BasicColorCalculation_Reflection {
 
 		@Test
 		public void testGetReflectionGrey() {
 
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
+			@SuppressWarnings("unused")
 			ISceneElement refElement = Mockito.mock(ISceneElement.class);
 			
-			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color());
-
+			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,110,120));
+			when(refIntersection.getRefElement().getMaterial().getReflection()).thenReturn(0.2);
 			
-			BasicColorCalculation testPhongShading = new BasicColorCalculation(0.1);
+			BasicColorCalculation testBasicColorCalculation = new BasicColorCalculation(0.1);
 			Color inColor = new Color(100, 110, 120);
-			Color testColor = testPhongShading.getColor(refIntersection, inColor);
+			Color testColor = testBasicColorCalculation.getColor(refIntersection, inColor);
 
-			assertEquals(testColor.getColorValues()[0], 0);
-			assertEquals(testColor.getColorValues()[1], 0);
-			assertEquals(testColor.getColorValues()[2], 0);
+			assertEquals(testColor.getColorValues()[0], 30);
+			assertEquals(testColor.getColorValues()[1], 33);
+			assertEquals(testColor.getColorValues()[2], 36);
 		}
 	}
 }

@@ -17,7 +17,6 @@ public class OutputPictureTest {
 	public void testOutputPicture() throws Exception {
 		int xLen=800;
 		int yLen=600;
-		@SuppressWarnings("nls")
 		OutputPicture output = new OutputPicture("test_output_picture.ppm", xLen,yLen);
 		
 		for (int yi=0;yi<yLen;yi++)

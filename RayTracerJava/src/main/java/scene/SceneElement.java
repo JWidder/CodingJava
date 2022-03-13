@@ -3,8 +3,9 @@ package scene;
 import util.Color;
 import util.Dir3D;
 import util.Intersection;
+import util.Material;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Vector3D;
 
 /**
@@ -12,11 +13,14 @@ import util.Vector3D;
  *
  */
 public abstract class SceneElement extends BasisElement implements ISceneElement{
+	Material typMaterial;
+
+	
 	public SceneElement() {
 		return;
 	}
 
-	ReflectedColor ligthShading;
+	ColorCalculation ligthShading;
 
 	@Override
 	public Intersection intersectRay(LightRay inRay) {
@@ -43,12 +47,18 @@ public abstract class SceneElement extends BasisElement implements ISceneElement
 	}
 
 	@Override
-	public void addLightShading(ReflectedColor inLightShading) {
+	public void addLightShading(ColorCalculation inLightShading) {
 		this.ligthShading = inLightShading;
 	}
 
 	@Override
-	public ReflectedColor getLightShading() {
+	public ColorCalculation getLightShading() {
 		return this.ligthShading;
 	}
+
+	@Override
+	public Material getMaterial() {
+		return this.typMaterial;
+	}
+
 }

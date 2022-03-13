@@ -69,9 +69,9 @@ public class UtilTest {
 			
 			Point3D mittelPunkt = new Point3D(2.0,0.0,0.0);
 			double radius = 1.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading,new Material());
 			//act 
 			// boolean actual = Util.doesIntersect(ray, sphere);
 			Intersection actual = sphere.intersectRay(ray);
@@ -91,9 +91,9 @@ public class UtilTest {
 			
 			Point3D mittelPunkt = new Point3D(2.0,10.0,0.0);
 			double radius = 1.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading,new Material());
 			//act 
 			// boolean actual = Util.doesIntersect(ray, sphere);
 			Intersection actual = sphere.intersectRay(ray);

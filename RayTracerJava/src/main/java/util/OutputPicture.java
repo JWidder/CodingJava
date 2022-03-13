@@ -16,7 +16,6 @@ public class OutputPicture {
 	 * @param xLen
 	 * @param yLen
 	 */
-	@SuppressWarnings("nls")
 	public OutputPicture(String fileName,int xLen,int yLen)
 	{
 		try {
@@ -33,7 +32,6 @@ public class OutputPicture {
 	/**
 	 * @param inColor
 	 */
-	@SuppressWarnings("nls")
 	public void writePoint(Color inColor)
 	{
 		try {
@@ -47,7 +45,6 @@ public class OutputPicture {
 	/**
 	 * @param inColor
 	 */
-	@SuppressWarnings("nls")
 	public void writePoint(ColorValue inColor)
 	{
 		try {

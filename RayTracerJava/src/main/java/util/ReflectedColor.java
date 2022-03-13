@@ -1,22 +1,12 @@
 package util;
 
-/**
- * Die Klassen, die das Interface ReflectedColor realisieren ermitteln 
- * die Farbe eines reflektierten Strahls.  
- * 
- * @author Johannes Widder
- */
-public interface ReflectedColor {
+public class ReflectedColor implements ColorCalculation {
 
-	
-	/**
-	 * Berechnet die Farbe des am Schnittpunktes zwischen Strahl und Objekt 
-	 * reflektierten Strahls 
-	 * 
-	 * @param inIntersection
-	 * @param inColor
-	 * @return {@link Color} Farbe des reflektierten Strahls. 
-	 */
-	public Color getColor(Intersection inIntersection,Color inColor);
-	
+	@Override
+	public Color getColor(Intersection inIntersection, Color inColor) {
+		double factor = inIntersection.getRefElement().getMaterial().getReflection();
+		Color test = inColor.reduceColor(factor);
+		Color result = new Color(test);
+		return result;
+	}
 }

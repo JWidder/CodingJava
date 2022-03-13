@@ -4,7 +4,6 @@ package util;
  * @author Johannes Widder
  *
  */
-@SuppressWarnings("javadoc")
 public class Dir3D {
 	double[] dir;
 

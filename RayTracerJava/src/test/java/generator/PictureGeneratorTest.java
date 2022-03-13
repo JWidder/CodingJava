@@ -11,9 +11,10 @@ import util.Color;
 import util.ColorValue;
 import util.Dir3D;
 import util.Intersection;
+import util.Material;
 import util.BasicColorCalculation;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Util;
 
 /**
@@ -30,12 +31,12 @@ public class PictureGeneratorTest {
 		Scene inScene = new Scene();
 		inScene.setAmbientLight(new Color(50,50,50));
 
-		ReflectedColor testShading = new BasicColorCalculation(0.1);
-		inScene.addElement(new Sphere3D(new Point3D(60.0,0.0,0.0), 1.0, ColorValue.RED,testShading));
-		inScene.addElement(new Sphere3D(new Point3D(150.0,1.5,0.0), 0.5,ColorValue.LIGHTBLUE,testShading));
-		inScene.addElement(new Sphere3D(new Point3D(150.0,-1.5,0.0), 0.5,ColorValue.LIGHTBLUE,testShading));
-		inScene.addElement(new Sphere3D(new Point3D(150.0,0.0,1.5), 0.5,ColorValue.GREEN,testShading));
-		inScene.addElement(new Sphere3D(new Point3D(150.0,0.0,-1.5), 0.5,ColorValue.GREEN,testShading));
+		ColorCalculation testShading = new BasicColorCalculation(0.1);
+		inScene.addElement(new Sphere3D(new Point3D(60.0,0.0,0.0), 1.0, ColorValue.RED,testShading,new Material()));
+		inScene.addElement(new Sphere3D(new Point3D(150.0,1.5,0.0), 0.5,ColorValue.LIGHTBLUE,testShading,new Material()));
+		inScene.addElement(new Sphere3D(new Point3D(150.0,-1.5,0.0), 0.5,ColorValue.LIGHTBLUE,testShading,new Material()));
+		inScene.addElement(new Sphere3D(new Point3D(150.0,0.0,1.5), 0.5,ColorValue.GREEN,testShading,new Material()));
+		inScene.addElement(new Sphere3D(new Point3D(150.0,0.0,-1.5), 0.5,ColorValue.GREEN,testShading,new Material()));
 		
 		PictureGenerator testPictureGenerator = new PictureGenerator(800,600,inScene);
 		testPictureGenerator.createPicture(1);
@@ -48,8 +49,8 @@ public class PictureGeneratorTest {
 	@Test
 	public void testNoIntersection() {
 		Scene inScene = new Scene();
-		ReflectedColor testShading = new BasicColorCalculation(0.1);
-		inScene.addElement(new Sphere3D(new Point3D(60.0,0.0,0.0), 1.0, ColorValue.RED,testShading));
+		ColorCalculation testShading = new BasicColorCalculation(0.1);
+		inScene.addElement(new Sphere3D(new Point3D(60.0,0.0,0.0), 1.0, ColorValue.RED,testShading,new Material()));
 		
 		PictureGenerator testPictureGenerator = new PictureGenerator(800,600,inScene);
 		Point3D startPoint = new Point3D(-1.0,0.0,0.0);
@@ -66,8 +67,8 @@ public class PictureGeneratorTest {
 	@Test
 	public void testIntersectSphere() {
 		Scene inScene = new Scene();
-		ReflectedColor testShading = new BasicColorCalculation(0.1);
-		inScene.addElement(new Sphere3D(new Point3D(60.0,0.0,0.0), 1.0, ColorValue.RED,testShading));
+		ColorCalculation testShading = new BasicColorCalculation(0.1);
+		inScene.addElement(new Sphere3D(new Point3D(60.0,0.0,0.0), 1.0, ColorValue.RED,testShading,new Material()));
 		
 		PictureGenerator testPictureGenerator = new PictureGenerator(800,600,inScene);
 		Point3D startPoint = new Point3D(0.0,0.0,0.0);
@@ -85,8 +86,8 @@ public class PictureGeneratorTest {
 	public void testGetNextRay() {
 
 		Scene inScene = new Scene();
-		ReflectedColor testShading = new BasicColorCalculation(0.1);
-		inScene.addElement(new Sphere3D(new Point3D(1.0,0.0,0.0), 1.0, ColorValue.RED,testShading));
+		ColorCalculation testShading = new BasicColorCalculation(0.1);
+		inScene.addElement(new Sphere3D(new Point3D(1.0,0.0,0.0), 1.0, ColorValue.RED,testShading,new Material()));
 		Point3D startPoint = new Point3D(-1.0,-1.0,0.0);
 		Point3D endPoint= new Point3D (0.0,0.0,0.0);
 		LightRay inLightRay = new LightRay(startPoint,endPoint);

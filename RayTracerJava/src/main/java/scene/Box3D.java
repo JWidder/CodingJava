@@ -4,7 +4,7 @@ import util.Color;
 import util.Dir3D;
 import util.Intersection;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Vector3D;
 
 /**
@@ -127,7 +127,7 @@ public class Box3D extends SceneElement{
 	}
 
 	@Override
-	public void addLightShading(ReflectedColor inLightShading) {
+	public void addLightShading(ColorCalculation inLightShading) {
 		// TODO Auto-generated method stub
 		
 	}

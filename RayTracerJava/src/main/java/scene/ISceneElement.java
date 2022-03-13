@@ -3,8 +3,9 @@ package scene;
 import util.Color;
 import util.Dir3D;
 import util.Intersection;
+import util.Material;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Vector3D;
 
 /**
@@ -37,7 +38,9 @@ public interface ISceneElement extends IBasisElement{
 	/**
 	 * @param inLightShading
 	 */
-	void addLightShading(ReflectedColor inLightShading);
+	void addLightShading(ColorCalculation inLightShading);
 	
-	ReflectedColor getLightShading();
+	ColorCalculation getLightShading();
+	
+	Material getMaterial();
 }

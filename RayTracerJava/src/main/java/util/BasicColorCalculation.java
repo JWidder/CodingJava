@@ -28,8 +28,9 @@ package util;
  * 
  * @author Johannes Widder
  */
-public class BasicColorCalculation implements ReflectedColor {
-	ReflectedColor ambientColor; 
+public class BasicColorCalculation implements ColorCalculation {
+	ColorCalculation ambientColor; 
+	ColorCalculation reflectedColor;
 	
 	/**
 	 * @param refSpectacular
@@ -39,6 +40,7 @@ public class BasicColorCalculation implements ReflectedColor {
 	 */
 	public BasicColorCalculation(double refAmbient) {
 		this.ambientColor=new AmbientColor(refAmbient);
+		this.reflectedColor=new ReflectedColor();
 	}
 	
 	/**
@@ -50,7 +52,8 @@ public class BasicColorCalculation implements ReflectedColor {
 	@Override
 	public Color getColor(Intersection inIntersection,Color inColor) {
 		Color result = this.ambientColor.getColor(inIntersection, null);
+		Color debugReflectedColor=this.reflectedColor.getColor(inIntersection, inColor);
+		result.addColor(debugReflectedColor);
 		return result;
-		
 	}
 }

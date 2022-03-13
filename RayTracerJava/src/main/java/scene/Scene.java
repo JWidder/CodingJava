@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import util.Color;
 import util.ColorValue;
 import util.Intersection;
+import util.Material;
 import util.BasicColorCalculation;
 import util.Point3D;
-import util.ReflectedColor;
+import util.ColorCalculation;
 import util.Util;
 
 /**
@@ -87,9 +88,9 @@ public class Scene extends BasisElement{
 					
 					double rTemp = Double.parseDouble(values[5]);
 					ColorValue colorTemp= ColorValue.valueOf(values[6]);
-					ReflectedColor testShading = new BasicColorCalculation(0.1);
+					ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-					this.sceneContent.add(new Sphere3D(new Point3D(xTemp,yTemp,zTemp), rTemp, colorTemp,testShading));
+					this.sceneContent.add(new Sphere3D(new Point3D(xTemp,yTemp,zTemp), rTemp, colorTemp,testShading,new Material()));
 				}
 				else if (line.matches(regTestBox)) {
 					String[] elements = line.split(regTestBox);
@@ -105,9 +106,9 @@ public class Scene extends BasisElement{
 					double rTemp = Double.parseDouble(values[5]);
 					ColorValue colorTemp= ColorValue.valueOf(values[6]);
 
-					ReflectedColor testShading = new BasicColorCalculation(0.1);
+					ColorCalculation testShading = new BasicColorCalculation(0.1);
 
-					this.sceneContent.add(new Sphere3D(new Point3D(xTemp,yTemp,zTemp), rTemp, colorTemp,testShading));
+					this.sceneContent.add(new Sphere3D(new Point3D(xTemp,yTemp,zTemp), rTemp, colorTemp,testShading,new Material()));
 				}
 			}
 		} catch (IOException e) {

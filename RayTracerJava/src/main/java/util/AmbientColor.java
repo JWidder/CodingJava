@@ -13,7 +13,7 @@ package util;
  * 
  * @author Johannes Widder
  */
-public class AmbientColor implements ReflectedColor{
+public class AmbientColor implements ColorCalculation{
 
 	private double ambientFactor;
 	
