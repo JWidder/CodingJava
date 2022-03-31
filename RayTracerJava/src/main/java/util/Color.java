@@ -50,8 +50,10 @@ public class Color {
 	}
 	
     /**
-     * @param pos
-     * @return
+     * Zugriff auf einzelne Farwerte. 
+     * 
+     * @param pos Nummer des Farbvektors, der angesprochen werden soll. 
+     * @return Gibt einen einzelnen Farbwert zurück. 
      */
     public int getColorValue(int pos) {
     	return this.colorValue[pos];

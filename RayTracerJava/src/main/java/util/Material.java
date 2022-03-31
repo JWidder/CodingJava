@@ -18,15 +18,24 @@ public class Material {
 		this.reflection=0.1;
 	}
 	
+	/**
+	 * @param inReflection
+	 */
 	public Material(double inReflection) {
 		super();
 		this.reflection=inReflection;
 	}
 
+	/**
+	 * @return Refernce to value reflection.
+	 */
 	public double getReflection() {
 		return reflection;
 	}
 
+	/**
+	 * @param reflection
+	 */
 	public void setReflection(double reflection) {
 		this.reflection = reflection;
 	}	

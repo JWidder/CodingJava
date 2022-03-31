@@ -18,5 +18,4 @@ public interface ColorCalculation {
 	 * @return {@link Color} Farbe des reflektierten Strahls. 
 	 */
 	public Color getColor(Intersection inIntersection,Color inColor);
-	
 }

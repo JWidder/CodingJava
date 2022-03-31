@@ -10,6 +10,7 @@ import util.Vector3D;
 /**
  * @author Johannes Widder
  *
+ * TODO Box3D erstellen
  */
 public class Box3D extends SceneElement{
 	double xLen;
@@ -110,13 +111,11 @@ public class Box3D extends SceneElement{
 
 	@Override
 	public Vector3D getNormal(Point3D inPoint) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Color getValueColor() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -128,9 +127,17 @@ public class Box3D extends SceneElement{
 
 	@Override
 	public void addLightShading(ColorCalculation inLightShading) {
-		// TODO Auto-generated method stub
-		
+		return;
 	}
-	
-	
+
+	@Override
+	public boolean doesIntersectRay(LightRay inRay) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+//	@Override
+//	public boolean doesIntersectRay(LightRay inRay) {
+//		return false;
+//	}
 }

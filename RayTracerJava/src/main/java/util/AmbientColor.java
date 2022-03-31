@@ -17,6 +17,9 @@ public class AmbientColor implements ColorCalculation{
 
 	private double ambientFactor;
 	
+	/**
+	 * @param inAmbientFactor
+	 */
 	public AmbientColor(double inAmbientFactor) {
 		super();
 		this.ambientFactor = inAmbientFactor;

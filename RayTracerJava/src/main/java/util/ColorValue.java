@@ -5,6 +5,7 @@ package util;
  *
  */
 
+@SuppressWarnings("javadoc")
 public enum ColorValue {
 	GREY(142, 142, 147),
 	RED(255, 59, 48),

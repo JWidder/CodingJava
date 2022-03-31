@@ -5,6 +5,23 @@ package util;
  *
  */
 public class Point3D {
+
+	private double xPos;
+	private double yPos;
+	private double zPos;
+
+	
+	public Point3D(Point3D inPoint) {
+		this.xPos = inPoint.xPos;
+		this.yPos = inPoint.yPos;
+		this.zPos = inPoint.zPos;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s: x=%5.3f y=%5.3f z=%5.3f", this.getClass().getName(),this.xPos,this.yPos,this.zPos);
+	}
+	
 	/**
 	 * @return double
 	 */
@@ -12,6 +29,7 @@ public class Point3D {
 		return this.xPos;
 	}
 
+	
 	/**
 	 * @param xPos
 	 */
@@ -47,9 +65,6 @@ public class Point3D {
 		this.zPos = zPos;
 	}
 
-	double xPos;
-	double yPos;
-	double zPos;
 
 	/**
 	 * 
@@ -97,9 +112,4 @@ public class Point3D {
 		return this;
 	}
 
-	@SuppressWarnings("nls")
-	@Override
-	public String toString() {
-		return String.format("x=%f y=%f z=%f", this.xPos,this.yPos,this.zPos);
-	}
 }

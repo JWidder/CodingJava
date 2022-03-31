@@ -9,10 +9,9 @@ import util.Util;
  * @author Johannes Widder
  *
  */
-public class LightRay{
+public class LightRay implements ILightRay{
 	protected Point3D basis;
 	protected Dir3D direction;
-	// Color RayColor
 
 	/**
 	 * 
@@ -49,11 +48,17 @@ public class LightRay{
 		this.basis=startPunkt;
 		this.direction=Util.difference(endPoint, startPunkt).normalize();
 	}
+
+	@Override
+	public String toString() {
+		return "[" + this.basis.toString() + " " + this.direction.toString()+"]";
+	}
 	
 	/**
 	 * @param parameter
 	 * @return {@link Point3D}
 	 */
+	@Override
 	public Point3D getPoint(double parameter)
 	{
 		Point3D result = new Point3D();
@@ -68,6 +73,7 @@ public class LightRay{
 	/**
 	 * @return {@link Point3D}
 	 */
+	@Override
 	public Point3D getBasis() {
 		return this.basis;
 	}
@@ -75,6 +81,7 @@ public class LightRay{
 	/**
 	 * @return {@link Dir3D}
 	 */
+	@Override
 	public Dir3D getDirection() {
 		return this.direction;
 	}

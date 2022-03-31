@@ -2,14 +2,13 @@ package generator;
 
 import scene.LightRay;
 import scene.Scene;
+import scene.SceneTracer;
 import util.Color;
-import util.Intersection;
 import util.OutputPicture;
 import util.Point3D;
-import util.Util;
 
 /**
- * @author johan
+ * @author Johannes Widder
  *
  */
 public class PictureGenerator {
@@ -29,7 +28,8 @@ public class PictureGenerator {
 	double deltaScreen;
 
 	private Point3D positionCamera;
-	private Scene _scene;
+	// private Scene _scene;
+	SceneTracer sceneTracer;
 
 	/**
 	 * @param inxLen Scene width (unit Pixel)
@@ -47,7 +47,7 @@ public class PictureGenerator {
 
 		this.positionCamera = new Point3D(-1.0, 0.0, 0.0);
 
-		this._scene = inScene;
+		this.sceneTracer = new SceneTracer(inScene);
 	}
 
 	/**
@@ -59,82 +59,13 @@ public class PictureGenerator {
 		for (int yCount = 0; yCount < this.yLen; yCount++) {
 			for (int xCount = 0; xCount < this.xLen; xCount++) {
 				Point3D screenPoint = getScreenPoint(xCount, yCount);
-//				ArrayList<Intersection> intersectionList = getListOfRays(screenPoint);
-//				Color resultColor = extracted_Color(intersectionList);
 				LightRay startRay = new LightRay(this.positionCamera, screenPoint);
-//				Color result = getPoint(startRay);
-				Color result = this._scene.traceLightRay(startRay);
+				Color result = this.sceneTracer.traceLightRay(startRay,0);
 				bildAusgabe.writePoint(result);
 			}
 		}
 		bildAusgabe.close();
 	}
-
-	Color getPoint(LightRay _lightRay) {
-		Intersection nextIntersection = this._scene.intersectRay(_lightRay);
-		// Check whether to cast a new ray
-		if (nextIntersection.getRefElement() == null) {
-			return new Color(0, 0, 0);
-		} else {
-			if (!nextIntersection.hasIntersected()) {
-				return new Color(0, 0, 0);
-			} else {
-				LightRay newRay = Util.getNextRay(_lightRay, nextIntersection);
-				Color resultColor2 = getPoint(newRay);
-				return resultColor2;
-			}
-		}
-	}
-
-//	/**
-//	 * Get the list of rays starting from the ray at the camera to the screen point.
-//	 * 
-//	 * @param yCount
-//	 * @param xCount
-//	 * @return list of rays.
-//	 */
-//	ArrayList<Intersection> getListOfRays(Point3D screenPoint) {
-//		// Strahl ermitteln
-//		LightRay lightRay = new LightRay(this.positionCamera, screenPoint, new Color());
-//
-//		ArrayList<Intersection> intersectionList = new ArrayList<Intersection>();
-//		int rayCount = 0;
-//		do {
-//			Intersection nextIntersection = this._scene.intersectRay(lightRay);
-//			intersectionList.add(0, nextIntersection);
-//			lightRay = Util.getNextRay(lightRay, nextIntersection);
-//			if (lightRay == null) {
-//				break;
-//			}
-//			rayCount++;
-//		} while (rayCount < 10);
-//
-//		return intersectionList;
-//	}
-
-	/**
-	 * Aus der Liste der Schnittpunkte die Farbe des Strahls ermitteln, an dem der
-	 * erste Strahl den Bildschirm schneidet.
-	 * 
-	 * 
-	 * 
-	 * @param intersectionList Liste der Schnittpunktes
-	 * @return
-	 */
-//	Color extracted_Color(ArrayList<Intersection> intersectionList) {
-//
-//		Color resultColor = new Color();
-//		for (Intersection valueIntersection : intersectionList) {
-//			if (valueIntersection.getRefElement() == null) {
-//				resultColor.setColor(ColorValue.BLACK);
-//			} else {
-//				Color newColor = new Color(valueIntersection.getRefElement().getValueColor());
-//				double faktor = valueIntersection.getRefElement().getValueReflection();
-//				resultColor = newColor.addColor(resultColor.reflectColor(faktor));
-//			}
-//		}
-//		return resultColor;
-//	}
 
 	/**
 	 * Find the position of the point with the coordinates (xCount,yCount) on the

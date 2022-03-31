@@ -10,6 +10,7 @@ import util.Vector3D;
 /**
  * @author Johannes Widder
  *
+ * TODO Plane3D fertig stellen
  */
 public class Plane3D extends SceneElement {
 	Dir3D dir_1;
@@ -18,8 +19,6 @@ public class Plane3D extends SceneElement {
 	Dir3D normal;
 	ColorValue valueColors;
 
-	
-	
 	/**
 	 * @param base
 	 * @param normal
@@ -29,8 +28,6 @@ public class Plane3D extends SceneElement {
 		this.base = base;
 		this.normal = normal;
 	}
-
-
 
 	/**
 	 * @param dir_1
@@ -46,32 +43,32 @@ public class Plane3D extends SceneElement {
 
 	@Override
 	public Intersection intersectRay(LightRay inRay) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
 	public Vector3D getNormal(Point3D inPoint) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
 	public Color getValueColor() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
 	public ISceneElement move(Dir3D dir) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public boolean doesIntersectRay(LightRay inRay) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+//	@Override
+//	public boolean doesIntersectRay(LightRay inRay) {
+//		return false;
+//	}
 }

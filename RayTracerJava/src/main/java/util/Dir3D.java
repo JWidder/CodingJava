@@ -43,6 +43,12 @@ public class Dir3D {
 		this.setzDir(endPoint.getzPos() - startPoint.getzPos());
 	}
 	
+	@SuppressWarnings("nls")
+	@Override
+	public String toString() {
+		return String.format("%s: x=%5.3f y=%5.3f z=%5.3f", getClass().getName(),this.dir[0],this.dir[1],this.dir[2]);
+	}
+	
 	/**
 	 * @return
 	 */

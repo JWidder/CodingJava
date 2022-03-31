@@ -1,7 +1,7 @@
 /**
  * Generator um Bilder zu erzeugen. 
  * 
- * TODO: Dieses Package kann eventuell in das Packet Raytracer verschoben werden. 
+ * Dieses Package kann eventuell in das Packet Raytracer verschoben werden. 
  */
 package generator;
 

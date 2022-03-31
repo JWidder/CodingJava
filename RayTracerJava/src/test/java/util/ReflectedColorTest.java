@@ -10,6 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * @author Johannes Widder
+ *
+ */
 public class ReflectedColorTest {
 
 	@Nested

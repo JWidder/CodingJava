@@ -1,10 +1,13 @@
 package util;
 
-import scene.LightRay;
+import scene.ILightRay;
 import scene.ISceneElement;
+import scene.StatusIntersection;
 
 /**
  * Eigenschaften des Schnittpunktes einer Lichtstrahls mit einem Objekt der Szene.
+ * 
+ * der Schnittpunkt kapselt im Ziel die Berechnung des Farbwertes 
  *  
  * @author Johannes Widder
  * 
@@ -13,6 +16,10 @@ public class Intersection {
 	private double parameter;
 	private ISceneElement refElement;
 	private Point3D intersectionPoint;
+	private ILightRay inRay;
+	private ILightRay outRay;
+	private TypeIntersection typeInersection;
+	private StatusIntersection statusIntersection;
 	/**
 	 * 
 	 * @param inParameter Parameter der Schnittgerade. Wird dazu benötigt zu testen,
@@ -21,7 +28,7 @@ public class Intersection {
 	 * @param inIntersectionPoint Schnittpunkt 
 	 * @param inLightRay 
 	 */
-	public Intersection(double inParameter,ISceneElement inElement,Point3D inIntersectionPoint,LightRay inLightRay) {
+	public Intersection(double inParameter,ISceneElement inElement,Point3D inIntersectionPoint,ILightRay inLightRay) {
 		this.parameter=inParameter;
 		this.refElement=inElement;
 		this.intersectionPoint = inIntersectionPoint;
@@ -79,11 +86,36 @@ public class Intersection {
 		}
 	}
 
+	public void addInLightRay(ILightRay inRay) {
+		this.inRay = inRay;
+	}
 	
-//	/**
-//	 * @param ray
-//	 */
-//	public void addLightRay(LightRay ray) {
-//		this.refLightRay=ray;	
-//	}
+	public void addOutLightRay(ILightRay outRay) {
+		this.outRay=outRay;
+	}
+
+	public ILightRay getInRay() {
+		return this.inRay;
+	}
+
+	public ILightRay getOutRay() {
+		return this.outRay;
+	}
+
+	public TypeIntersection getTypeIntersection() {
+		return this.typeInersection;
+	}
+
+	public void setTypeIntersection(TypeIntersection typeInersection) {
+		this.typeInersection = typeInersection;
+	}
+
+	public StatusIntersection getStatusIntersection() {
+		return this.statusIntersection;
+	}
+
+	public void setStatusIntersection(StatusIntersection statusIntersection) {
+		this.statusIntersection = statusIntersection;
+	}
+
 }

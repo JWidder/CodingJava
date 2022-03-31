@@ -37,7 +37,6 @@ public class OutputPicture {
 		try {
 			this.writer.write(String.format("%d %d %d\n",inColor.getColorValue(0),inColor.getColorValue(1),inColor.getColorValue(2)));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -50,7 +49,6 @@ public class OutputPicture {
 		try {
 			this.writer.write(String.format("%d %d %d\n",(int)inColor.getRedValue(),(int)inColor.getGreenValue(),(int)inColor.getBlueValue())); 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -63,7 +61,6 @@ public class OutputPicture {
 	    try {
 			this.writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}

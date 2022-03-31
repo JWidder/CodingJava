@@ -15,7 +15,7 @@ public class RayTest {
 	 */
 	@Test
 	public void testRay() throws Exception {
-		// TODO Test erstellen
+		// XXX Test erstellen
 		assertEquals(1,1);
 	}
 

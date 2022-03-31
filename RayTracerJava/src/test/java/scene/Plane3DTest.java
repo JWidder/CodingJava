@@ -34,6 +34,7 @@ public class Plane3DTest {
 	 */
 	@Test
 	public void testIntersectRay() {
+		@SuppressWarnings("unused")
 		Plane3D testPlane3D = new Plane3D(new Point3D(0.0,0.0,0.0), new Dir3D(1.0,0.0,0.0));
 	}
 

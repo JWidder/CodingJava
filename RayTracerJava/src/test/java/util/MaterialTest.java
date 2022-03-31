@@ -16,6 +16,10 @@ public class MaterialTest {
 		}
 	}
 	
+	/**
+	 * @author Johannes Widder
+	 *
+	 */
 	@Nested
 	public class MaterialTest_GetterSetter{
 		

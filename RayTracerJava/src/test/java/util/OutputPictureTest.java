@@ -52,7 +52,6 @@ public class OutputPictureTest {
 	public void testOutputCircle() throws Exception {
 		int xLen=800;
 		int yLen=600;
-		@SuppressWarnings("nls")
 		OutputPicture output = new OutputPicture("test_output_circle.ppm", xLen,yLen);
 		
 		double x_2=(double)xLen/2.0;

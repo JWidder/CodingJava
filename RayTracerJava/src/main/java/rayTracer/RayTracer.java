@@ -1,12 +1,14 @@
 package rayTracer;
 
 import generator.PictureGenerator;
+import scene.ILight;
 import scene.Scene;
 import scene.Sphere3D;
-import util.Color;
+import scene.SpotLight;
 import util.ColorValue;
 import util.Material;
 import util.BasicColorCalculation;
+import util.Color;
 import util.Point3D;
 import util.ColorCalculation;
 
@@ -25,8 +27,7 @@ public class RayTracer
 		final double entfernung=15.0;
 		
 		Scene testScene = new Scene();
-		testScene.setAmbientLight(new Color(50,50,50));
-		ColorCalculation testShading = new BasicColorCalculation(1.0);
+		ColorCalculation testShading = new BasicColorCalculation(1.0,0.5,testScene);
 
 		testScene.addElement(new Sphere3D(new Point3D(entfernung,0.0,0.0),4,ColorValue.RED,testShading,new Material()));
 
@@ -39,6 +40,9 @@ public class RayTracer
 		testScene.addElement(new Sphere3D(new Point3D(entfernung,-abstand,abstand),4,ColorValue.RED,testShading,new Material()));
 		testScene.addElement(new Sphere3D(new Point3D(entfernung,abstand,-abstand),4,ColorValue.RED,testShading,new Material()));
 		testScene.addElement(new Sphere3D(new Point3D(entfernung,-abstand,-abstand),4,ColorValue.RED,testShading,new Material()));
+		
+		ILight testLight=new SpotLight(new Point3D(-1.0*entfernung,0.0,0.0), new Color(255,255,255));
+		testScene.addElement(testLight);
 		
 		PictureGenerator generator = new PictureGenerator(1200,1200,testScene);
 		generator.createPicture(1);

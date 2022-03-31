@@ -127,7 +127,7 @@ public class ColorTest {
 	public void testReflectColor() {
 		Color testColor = new Color(50,60,70);
 		
-		Color result = testColor.reflectColor(0.1);
+		Color result = testColor.reduceColor(0.1);
 		
 		assertEquals(5, result.getColorValues()[0]);
 		assertEquals(6, result.getColorValues()[1]);

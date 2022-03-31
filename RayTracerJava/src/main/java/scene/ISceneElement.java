@@ -12,7 +12,7 @@ import util.Vector3D;
  * @author johan
  *
  */
-public interface ISceneElement extends IBasisElement{
+public interface ISceneElement {
 	/**
 	 * 
 	 * 
@@ -43,4 +43,20 @@ public interface ISceneElement extends IBasisElement{
 	ColorCalculation getLightShading();
 	
 	Material getMaterial();
+
+	/**
+	 * Schnelles ermitteln, ob ein Strahl eine Kugel schneidet. 
+	 * Diese Methode ist für die Schattenberechnung notwendig. 
+	 * 
+	 * TODO Schnellen Algorithmus zum Test Schnitt Kugel finden. 
+	 * 
+	 * Quelle und Beschreibung
+	 * http://kylehalladay.com/blog/tutorial/math/2013/12/24/Ray-Sphere-Intersection.html
+	 * 
+	 * @deprecated
+	 * 
+	 * @param inRay 
+	 * @return boolean Information ob der Strahl die Kugel schneidet. 
+	 */
+	boolean doesIntersectRay(LightRay inRay);
 }
