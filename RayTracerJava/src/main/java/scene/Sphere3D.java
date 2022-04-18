@@ -1,9 +1,9 @@
 package scene;
 
+import generator.Intersection;
 import util.Color;
 import util.ColorValue;
 import util.Dir3D;
-import util.Intersection;
 import util.Point3D;
 import util.TypeIntersection;
 import util.ColorCalculation;
@@ -81,7 +81,7 @@ public class Sphere3D extends SceneElement{
 	 * 
 	 * 
 	 * @param inRay 
-	 * @return {@link util.Intersection} in case no intersection or Intersection object if there is an intersection.
+	 * @return {@link generator.Intersection} in case no intersection or Intersection object if there is an intersection.
 	 */
 	@Override
 	public Intersection intersectRay(LightRay inRay)
@@ -96,39 +96,40 @@ public class Sphere3D extends SceneElement{
 		double temp_b = 2.0 * Util.dot(inRay.getDirection(), temp_dir);
 		double temp_c = Util.dot(temp_dir,temp_dir) - this.radius * this.radius;
 		
+		Intersection resultIntersection = new Intersection();
+		
 		double discriminante = (temp_b * temp_b) - (4 * temp_a * temp_c);
-		if (discriminante<0.0) 
-		{
+		if (discriminante<0.0){
 			// Case 1
-			Intersection resultIntersection = new Intersection(Double.MAX_VALUE, this, null,inRay);
+			resultIntersection.setParameter(Double.MAX_VALUE, null,inRay);
 			resultIntersection.setTypeIntersection(TypeIntersection.MISSES);
 			resultIntersection.setStatusIntersection(StatusIntersection.MISS);
-			return resultIntersection;
 		}
 		else
 		{
 			double t;
+			Point3D schnittPunkt;
 			if (discriminante==0.0)
 			{
 				t = -temp_b / (2 * temp_a);
-				Intersection resultIntersection= new Intersection(t, this, inRay.getPoint(t),inRay);
+				schnittPunkt = inRay.getPoint(t);
+				resultIntersection.setParameter(t, schnittPunkt, inRay);
+				resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
+				resultIntersection.setSceneElement(this);
 				if (t>0) {
 					// Case 2a
 					resultIntersection.setTypeIntersection(TypeIntersection.TOUCH);
 					resultIntersection.setStatusIntersection(StatusIntersection.INTERSECT);
-					return resultIntersection;
 				}
 				else if (t<0){
 					// Case 2b
 					resultIntersection.setTypeIntersection(TypeIntersection.TOUCH);
 					resultIntersection.setStatusIntersection(StatusIntersection.MISS);					
-					return resultIntersection;
 				}
 				else {
 					// Case 2c
 					resultIntersection.setTypeIntersection(TypeIntersection.TOUCH);
 					resultIntersection.setStatusIntersection(StatusIntersection.MISS);
-					return resultIntersection;
 				}
 			}
 			else
@@ -137,36 +138,39 @@ public class Sphere3D extends SceneElement{
 				double t2 = (-temp_b + Math.sqrt(discriminante)) / (2 * temp_a);
 				if ((t1>0)&&(t2>0)) { // Standard Inrersection between Spere and light ray. 
 					// Case 3a
-					Point3D schnittPunkt = inRay.getPoint(t1);
-					Intersection resultIntersection = new Intersection(t1, this, schnittPunkt,inRay);
+					schnittPunkt = inRay.getPoint(t1);
+					resultIntersection.setParameter(t1, schnittPunkt,inRay);
+					resultIntersection.setSceneElement(this);
+					resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
 					resultIntersection.setTypeIntersection(TypeIntersection.INTERSECTION);
 					resultIntersection.setStatusIntersection(StatusIntersection.INTERSECT);
-					
-					return resultIntersection;					
 				}
 				else if ((t1<0)&&(t2<0)){	// Sphere behind the light ray
-					Point3D schnittPunkt = inRay.getPoint(t2);
-					Intersection resultIntersection = new Intersection(t2, this, schnittPunkt,inRay);
+					schnittPunkt = inRay.getPoint(t2);
+					resultIntersection.setParameter(t2, schnittPunkt,inRay);
+					resultIntersection.setSceneElement(this);
+					resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
 					resultIntersection.setTypeIntersection(TypeIntersection.BEHIND_INTERSECTION);
 					resultIntersection.setStatusIntersection(StatusIntersection.MISS);
-					return resultIntersection;
 				}
 				else if ((t1<=0.0)&&(t2>0.0)){  
 					// Case 3C light ray starts within the sphere. 
-					Point3D schnittPunkt = inRay.getPoint(t2);
-					Intersection resultIntersection = new Intersection(t2, this, schnittPunkt,inRay);
+					schnittPunkt = inRay.getPoint(t2);
+					resultIntersection.setParameter(t2, schnittPunkt,inRay);
+					resultIntersection.setSceneElement(this);
+					resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
 					resultIntersection.setTypeIntersection(TypeIntersection.INNER_INTERSECTION);
 					resultIntersection.setStatusIntersection(StatusIntersection.INTERSECT);
-					return resultIntersection;
 				}
 				else if ((t1<0.0)&&(t2==0.0)) // Object interferes with the screen.
 				{
 					// Case 3D Case touch behind
-					Point3D schnittPunkt = inRay.getPoint(t1);
-					Intersection resultIntersection = new Intersection(Double.MAX_VALUE, this, schnittPunkt,inRay);
+					schnittPunkt = inRay.getPoint(t1);
+					resultIntersection.setParameter(Double.MAX_VALUE,null,inRay);
+					resultIntersection.setSceneElement(this);
+					resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
 					resultIntersection.setTypeIntersection(TypeIntersection.BEHIND_TOUCH);
 					resultIntersection.setStatusIntersection(StatusIntersection.MISS);
-					return resultIntersection;
 				}
 				else // No intersection in the allowed area.
 				{
@@ -174,8 +178,10 @@ public class Sphere3D extends SceneElement{
 					// FIXME add exception handling
 					return null;
 				}
+			resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
 			}
 		}
+		return resultIntersection;
 	}
 
 	/**

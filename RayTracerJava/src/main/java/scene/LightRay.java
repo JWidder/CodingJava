@@ -9,7 +9,7 @@ import util.Util;
  * @author Johannes Widder
  *
  */
-public class LightRay implements ILightRay{
+public class LightRay {
 	protected Point3D basis;
 	protected Dir3D direction;
 
@@ -58,7 +58,6 @@ public class LightRay implements ILightRay{
 	 * @param parameter
 	 * @return {@link Point3D}
 	 */
-	@Override
 	public Point3D getPoint(double parameter)
 	{
 		Point3D result = new Point3D();
@@ -73,7 +72,6 @@ public class LightRay implements ILightRay{
 	/**
 	 * @return {@link Point3D}
 	 */
-	@Override
 	public Point3D getBasis() {
 		return this.basis;
 	}
@@ -81,7 +79,6 @@ public class LightRay implements ILightRay{
 	/**
 	 * @return {@link Dir3D}
 	 */
-	@Override
 	public Dir3D getDirection() {
 		return this.direction;
 	}

@@ -1,5 +1,7 @@
 package util;
 
+import generator.Intersection;
+
 /**
  * @author Johannes Widder
  *
@@ -122,9 +124,6 @@ public class Util{
 	 */
 	public static Dir3D calculateReflectedDir(Intersection nextIntersection, Dir3D inDirection ) {
 		Point3D point = nextIntersection.getIntersectionPoint();
-//		Dir3D n = 			boolean doesIntersect = testSphere.intersectRay(testRay).getIntersectionPoint()==null;
-//		
-//		assertFalse(doesIntersect);	
 		Dir3D n = nextIntersection.getRefElement().getNormal(point).getDirection().normalize();
 		Dir3D ri = inDirection.normalize();
 		double f = Util.dot(ri, n);

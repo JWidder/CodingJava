@@ -2,6 +2,7 @@ package util;
 
 import java.util.Iterator;
 
+import generator.Intersection;
 import scene.ILight;
 import scene.ISceneElement;
 import scene.LightRay;
@@ -51,7 +52,7 @@ public class ShadowColor implements ColorCalculation {
 			if (!didIntersect)
 			{
 				Dir3D inRayDir = new Dir3D(lightPos,intersectionPoint);
-				Dir3D reflectRayDir=Util.calculateReflectedDir(inIntersection, inRayDir);
+				Dir3D reflectRayDir=inIntersection.addOutLightRay(inRayDir).getDirection();
 				
 				Dir3D test=inIntersection.getOutRay().getDirection();
 				double wertDot=Util.dot(reflectRayDir.normalize(), test.normalize());

@@ -1,9 +1,9 @@
 package scene;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
+import generator.Intersection;
 import util.Dir3D;
 import util.Point3D;
 
@@ -11,6 +11,7 @@ import util.Point3D;
  * @author Johannes Widder
  *
  */
+// @RunWith(MockitoJUnitRunner.class)
 public class Plane3DTest {
 
 	/**
@@ -32,10 +33,18 @@ public class Plane3DTest {
 	/**
 	 * 
 	 */
-	@Test
-	public void testIntersectRay() {
-		@SuppressWarnings("unused")
-		Plane3D testPlane3D = new Plane3D(new Point3D(0.0,0.0,0.0), new Dir3D(1.0,0.0,0.0));
+	@Nested
+	public class testPlaneIntersection{
+		@Test
+		public void testIntersectRay() {
+			Plane3D testPlane3D = new Plane3D(new Point3D(0.0,0.0,0.0), new Dir3D(1.0,0.0,0.0));
+			LightRay testLightRay = new LightRay(new Point3D(0.0,1.0,0.0),new Dir3D(0.0,-1.0,0.0));
+			
+			Intersection testIntersection = testPlane3D.intersectRay(testLightRay);
+			
+			// assertEquals(null, testIntersection.getIntersectionPoint());
+		}
+		
 	}
 
 	/**

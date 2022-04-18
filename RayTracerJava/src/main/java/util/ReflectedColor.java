@@ -1,5 +1,7 @@
 package util;
 
+import generator.Intersection;
+
 public class ReflectedColor implements ColorCalculation {
 
 	@Override

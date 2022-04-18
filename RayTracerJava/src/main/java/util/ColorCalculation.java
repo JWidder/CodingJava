@@ -1,5 +1,7 @@
 package util;
 
+import generator.Intersection;
+
 /**
  * Die Klassen, die das Interface ReflectedColor realisieren ermitteln 
  * die Farbe eines reflektierten Strahls.  

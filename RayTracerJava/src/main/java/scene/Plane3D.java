@@ -1,10 +1,11 @@
 package scene;
 
+import generator.Intersection;
 import util.Color;
 import util.ColorValue;
 import util.Dir3D;
-import util.Intersection;
 import util.Point3D;
+import util.Util;
 import util.Vector3D;
 
 /**
@@ -39,6 +40,7 @@ public class Plane3D extends SceneElement {
 		this.dir_1 = dir_1;
 		this.dir_2 = dir_2;
 		this.base = base;
+		this.normal=Util.normalVector(dir_1, dir_2);
 	}
 
 	@Override
@@ -66,9 +68,4 @@ public class Plane3D extends SceneElement {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-//	@Override
-//	public boolean doesIntersectRay(LightRay inRay) {
-//		return false;
-//	}
 }

@@ -1,8 +1,8 @@
 package scene;
 
+import generator.Intersection;
 import util.Color;
 import util.Dir3D;
-import util.Intersection;
 import util.Material;
 import util.Point3D;
 import util.ColorCalculation;
@@ -23,7 +23,7 @@ public interface ISceneElement {
 	Intersection intersectRay(LightRay inRay) ;
 	/**
 	 * @param inPoint
-	 * @return {@link util.Intersection}
+	 * @return {@link generator.Intersection}
 	 */
 	Vector3D getNormal(Point3D inPoint);
 	/**

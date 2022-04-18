@@ -1,5 +1,6 @@
 package util;
 
+import generator.Intersection;
 import scene.Scene;
 
 /**

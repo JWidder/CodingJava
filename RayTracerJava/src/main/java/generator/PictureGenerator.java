@@ -1,5 +1,6 @@
 package generator;
 
+import rayTracer.Parameter;
 import scene.LightRay;
 import scene.Scene;
 import scene.SceneTracer;
@@ -47,7 +48,7 @@ public class PictureGenerator {
 
 		this.positionCamera = new Point3D(-1.0, 0.0, 0.0);
 
-		this.sceneTracer = new SceneTracer(inScene);
+		this.sceneTracer = new SceneTracer(inScene,new Parameter());
 	}
 
 	/**

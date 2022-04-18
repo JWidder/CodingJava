@@ -20,7 +20,7 @@ public class LightRayTest {
 	@Nested
 	class test_CaldulatePoint
 	{
-		ILightRay testLightRay;
+		LightRay testLightRay;
 		@BeforeEach
 		void createTestRay()
 		{
@@ -50,7 +50,7 @@ public class LightRayTest {
 	@Nested
 	class test_ValidateGetters
 	{
-		ILightRay testLightRay;
+		LightRay testLightRay;
 		Point3D testPoint;
 		Dir3D testDir;
 		@BeforeEach

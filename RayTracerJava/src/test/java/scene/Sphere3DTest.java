@@ -1,8 +1,6 @@
 package scene;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import org.junit.jupiter.api.Nested;
@@ -11,16 +9,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import net.bytebuddy.implementation.ToStringMethod;
+import generator.Intersection;
 import util.ColorValue;
 import util.Dir3D;
-import util.Intersection;
 import util.Material;
 import util.BasicColorCalculation;
 import util.Point3D;
 import util.TypeIntersection;
 import util.ColorCalculation;
-import util.Util;
 
 /**
  * UnitTest Klasse Spere3D
@@ -71,7 +67,7 @@ public class Sphere3DTest {
 	}
 	
 	/**
-	 * Test Schnitt Lightray Sphere different cases 
+	 * Test Schnitt LightRay Sphere different cases 
 	 * 
 	 * @author Johannes Widder
 	 */
@@ -98,7 +94,7 @@ public class Sphere3DTest {
 			Intersection result = sphere.intersectRay(testRay);
 			
 			assertEquals(Double.MAX_VALUE,result.getParameter(), 0.00001);
-			assertEquals(sphere,result.getRefElement());
+			assertEquals(null,result.getRefElement());
 			assertEquals(TypeIntersection.MISSES, result.getTypeIntersection());
 			assertEquals(StatusIntersection.MISS, result.getStatusIntersection());
 			

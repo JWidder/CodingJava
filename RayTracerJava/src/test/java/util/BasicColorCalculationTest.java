@@ -15,6 +15,8 @@ import static org.mockito.Mockito.when;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import generator.Intersection;
+
 /**
  * Ermitteln der Farbe des reflektierten Strahls durch die Klasse
  *  

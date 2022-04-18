@@ -1,11 +1,9 @@
 package scene;
 
+import generator.Intersection;
+import rayTracer.Parameter;
 import util.Color;
 import util.ColorValue;
-import util.Dir3D;
-import util.DebugAusgabe;
-import util.Intersection;
-import util.Util;
 
 /**
  * Die Klasse SceneTracer realisiert die Nachverfolgung der Lichtstrahlen. 
@@ -16,44 +14,33 @@ import util.Util;
 public class SceneTracer {
 
 	Scene scene;
+	Parameter parameter;
 	/**
 	 * @param inScene 
+	 * @param inParameter 
 	 * 
 	 */
-	public SceneTracer(Scene inScene) {
+	public SceneTracer(Scene inScene,Parameter inParameter) {
 		this.scene = inScene;
+		this.parameter = inParameter;	
 	}
 	
-
-	/**
-	 * Verifies whether the ray intersects any element of the scene.
-	 * 
-	 * This method is used to check whether a
-	 * 
-	 * @param inElement
-	 * @param inRay
-	 * @param Parameter
-	 * @return
-	 */
-//	public boolean checkIntersectRay(ISceneElement inElement, ILightRay inRay, double Parameter) {
-//		return false;
-//	}
-
 	/**
 	 * Realisiert die rekursive Strahlverfolgung. 
 	 * 
 	 * Abbruchkriterien sind 
 	 * 
 	 *  - der Strahl schneidet das Ende der Scene. Dann wird dies Farbe schwarz zurückgegeben. 
-	 *  - Die Anzahl der Iterationen überschrieb Anzahl der Iterationen den maximalen Wert 
-	 *    übersteigt, dann wird die ambient Farbe des letzten Objektes zurückgegeben.
+	 *  - Die Anzahl der Iterationen übersteigt maximale Anzahl erlaubter Iterationen. 
+	 *    In diesem Fall wird ebenfalls Schwarz zurückgegeben.
 	 * 
 	 * @param inLightRay
+	 * @param count 
 	 * @return Farbe des reflektierten Lichtstrahls
 	 */
 	public Color traceLightRay(LightRay inLightRay,int count) {
 		Intersection testIntersection = this.intersectRay(inLightRay);
-		if (count >= 20) {
+		if (count >= this.parameter.maxIterationCount) {
 			// ToDo Hier die Farbe des letzten berührten Objektes der Scene eintragen
 			return new Color(ColorValue.BLACK);			
 		}
@@ -61,21 +48,21 @@ public class SceneTracer {
 			return new Color(ColorValue.BLACK);
 		}
 		else {
-			LightRay nextRay = getNextRay(inLightRay, testIntersection);
-			testIntersection.addOutLightRay(nextRay);
+			// LightRay nextRay = getNextRay(inLightRay, testIntersection);
+			LightRay nextRay = testIntersection.addOutLightRay(inLightRay.getDirection());
 			return traceLightRay(nextRay,count+1);
 		}
 	}
 
 	/**
-	 * Ermittelt den Schnittpunkt mit dem Strahl. Die Parameter an dem Schnittpunkt
+	 * Ermittelt den Schnittpunkt mit dem Strahl der am nächsten am St. Die Parameter an dem Schnittpunkt
 	 * werden in einem Objekt der Klasse Intersection zurückgegeben. Einzelne sind
 	 * dies: - der Schnittpunkt - Normalenvektor an dem Schnittpunkt.
 	 * 
 	 * und die Einheitsnormale an dem Schnittpunkt
 	 * 
 	 * @param ray
-	 * @return {@link util.Intersection}
+	 * @return {@link generator.Intersection}
 	 */
 	public Intersection intersectRay(LightRay ray) {
 		Intersection refIntersection = null;
@@ -83,15 +70,15 @@ public class SceneTracer {
 
 		// Suche den zum Ursprung des Strahls nächsten Schnittpunkt.
 		for (ISceneElement sceneElement : this.scene.getElements()) {
-			Intersection result = sceneElement.intersectRay(ray);
-			if (result.getParameter() < refParameter) {
-				refParameter = result.getParameter();
-				refIntersection = result;
-				refIntersection.addInLightRay(ray);
+			Intersection valueIntersection = sceneElement.intersectRay(ray);
+			if (valueIntersection.getParameter() < refParameter) {
+				refParameter = valueIntersection.getParameter();
+				refIntersection = valueIntersection;
 			}
 		}
 
 		if (refIntersection == null) {
+			// No intersection found
 			return new Intersection(Double.MAX_VALUE, null, null, ray);
 		} else {
 			return refIntersection;
@@ -106,10 +93,9 @@ public class SceneTracer {
 	 * 
 	 * @return {@link scene.LightRay} reflected ray
 	 */
-	public LightRay getNextRay(ILightRay lightRay, Intersection nextIntersection) {
-		Dir3D rn = Util.calculateReflectedDir(nextIntersection,lightRay.getDirection());
-		LightRay newRay = new LightRay(nextIntersection.getIntersectionPoint(),rn);
-		return newRay;
-	}
-
+//	public LightRay getNextRay(LightRay lightRay, Intersection nextIntersection) {
+//		Dir3D rn = Util.calculateReflectedDir(nextIntersection,lightRay.getDirection());
+//		LightRay newRay = new LightRay(nextIntersection.getIntersectionPoint(),rn);
+//		return newRay;
+//	}
 }

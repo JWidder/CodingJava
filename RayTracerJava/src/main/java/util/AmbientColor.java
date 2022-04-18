@@ -1,5 +1,7 @@
 package util;
 
+import generator.Intersection;
+
 /**
  * Die Klasse AmbientColor ermittelt den richtungsunabhängigen Beitrag zur Farbe 
  * des reflektierten Strahls.    
