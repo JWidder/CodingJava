@@ -4,6 +4,9 @@
 package scene;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import javax.swing.plaf.metal.MetalBorders.TextFieldBorder;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import generator.Intersection;
@@ -159,6 +162,25 @@ public class Box3DTest {
 			assertEquals(Double.MAX_VALUE,result.getParameter(),0.00001);
 		}
 		
+	}
+	
+	@Nested
+	class TestMoveBox{
+		@Test
+		public void testMoveBox_xDir()
+		{
+			Box3D testBox = new Box3D(2.0, 3.0, 4.0);
+			
+			LightRay testLightRay = new LightRay(new Point3D(-1.0,0.0,0.0),new Point3D(0.0,0.0,0.0));
+			
+			testBox.move(new Dir3D (1.0,0.0,0.0));
+			
+			Intersection testIntersection = testBox.intersectRay(testLightRay);
+			
+			assertEquals (2.0,testIntersection.getParameter());
+			
+			return;
+		}
 	}
 
 }

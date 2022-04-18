@@ -16,8 +16,8 @@ import util.Material;
  *
  */
 public class Sphere3D extends SceneElement{
+	Point3D middlePoint;
 	double radius;
-	Color valueColor;
 
 	/**
 	 * @param mittelPunkt
@@ -27,7 +27,8 @@ public class Sphere3D extends SceneElement{
 	 * @param inMaterial
 	 */
 	public Sphere3D(Point3D mittelPunkt, double radius, ColorValue valueColors, ColorCalculation inShading, Material inMaterial) {
-		this.middle = mittelPunkt;
+		super();
+		this.middlePoint = mittelPunkt;
 		this.radius = radius;
 		this.valueColor= new Color(valueColors);
 		this.ligthShading=inShading;
@@ -85,13 +86,14 @@ public class Sphere3D extends SceneElement{
 	@Override
 	public Intersection intersectRay(LightRay inRay)
 	{
+		inRay.adjustPosition(this.moved);
 		// A ray.getBasis()
 		// B ray.getDirection()
 		// C this.mittelPunkt
 		// r this.radius
 				
 		double temp_a = Util.dot(inRay.getDirection(),inRay.getDirection());
-		Dir3D temp_dir = Util.difference(inRay.getBasis(), this.middle);
+		Dir3D temp_dir = Util.difference(inRay.getBasis(), this.middlePoint);
 		double temp_b = 2.0 * Util.dot(inRay.getDirection(), temp_dir);
 		double temp_c = Util.dot(temp_dir,temp_dir) - this.radius * this.radius;
 		
@@ -175,11 +177,13 @@ public class Sphere3D extends SceneElement{
 				{
 					// Should not happen uncovered Case
 					// FIXME add exception handling
+					inRay.returnPosition();
 					return null;
 				}
 			resultIntersection.setNormale(this.getNormal(schnittPunkt).getDirection());
 			}
 		}
+		inRay.returnPosition();
 		return resultIntersection;
 	}
 
@@ -271,7 +275,7 @@ public class Sphere3D extends SceneElement{
 
 	
 	Point3D getMittelPunkt() {
-		return this.middle;
+		return this.middlePoint;
 	}
 	
 	double getRadius() {
@@ -279,13 +283,8 @@ public class Sphere3D extends SceneElement{
 	}
 
 	@Override
-	public Color getValueColor() {
-		return this.valueColor;
-	}
-
-	@Override
 	public Vector3D getNormal(Point3D inPoint) {
-		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, this.middle));
+		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, this.middlePoint));
 		normale.normalize();
 		return normale;
 	}

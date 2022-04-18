@@ -9,7 +9,7 @@ import util.ColorCalculation;
 import util.Vector3D;
 
 /**
- * @author johan
+ * @author Johannes Widder
  *
  */
 public interface ISceneElement {
@@ -59,4 +59,10 @@ public interface ISceneElement {
 	 * @return boolean Information ob der Strahl die Kugel schneidet. 
 	 */
 	boolean doesIntersectRay(LightRay inRay);
+	
+	/**
+	 * Ermitteln des Wertes um den das Szenenelemtn gegenüber der Normallage verschoben wurde. 
+	 * @return
+	 */
+	Dir3D getMove();
 }

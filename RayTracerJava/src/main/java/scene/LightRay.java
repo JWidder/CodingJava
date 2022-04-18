@@ -12,7 +12,8 @@ import util.Util;
 public class LightRay {
 	protected Point3D basis;
 	protected Dir3D direction;
-
+	protected Dir3D adjustment;
+	
 	/**
 	 * 
 	 */
@@ -81,5 +82,14 @@ public class LightRay {
 	 */
 	public Dir3D getDirection() {
 		return this.direction;
+	}
+	
+	public void adjustPosition (Dir3D direction) {
+		this.adjustment=direction;
+		this.basis.movePoint(- direction.getxDir(), - direction.getyDir(), - direction.getzDir());
+	}
+	
+	public void returnPosition() {
+		this.basis.movePoint(this.adjustment);
 	}
 }

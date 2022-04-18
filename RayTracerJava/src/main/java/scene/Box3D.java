@@ -16,19 +16,18 @@ public class Box3D extends SceneElement{
 	double xLen;
 	double yLen;
 	double zLen;
+	Point3D basePoint;
 	
 	/**
 	 * Crate default box
 	 */
 	Box3D() 
 	{
+		super();
 		this.xLen=1;
 		this.yLen=1;
 		this.zLen=1;
-		this.middle=new Point3D();
-		this.xAngle=0;
-		this.yAngle=0;
-		this.zAngle=0;
+		this.basePoint=new Point3D();
 	}
 
 	/**
@@ -36,13 +35,11 @@ public class Box3D extends SceneElement{
 	 */
 	Box3D(double in_xLen,double in_yLen, double in_zLen) 
 	{
+		super();
 		this.xLen=in_xLen;
 		this.yLen=in_yLen;
 		this.zLen=in_zLen;
-		this.middle=new Point3D();
-		this.xAngle=0;
-		this.yAngle=0;
-		this.zAngle=0;
+		this.basePoint=new Point3D();
 	}
 
 	
@@ -51,6 +48,9 @@ public class Box3D extends SceneElement{
 	 */
 	@Override
 	public Intersection intersectRay(LightRay inRay) {
+		
+		inRay.adjustPosition(this.moved);
+		
 		double sbx = inRay.basis.getxPos();
 		double sby = inRay.basis.getyPos();
 		double sbz = inRay.basis.getzPos();
@@ -146,12 +146,14 @@ public class Box3D extends SceneElement{
 		intersectionPoint.setyPos(s);
 		intersectionPoint.setzPos(s);				
 
-		// Intersection result = new Intersection(v, this, this.middle,inRay);
 		Intersection result = new Intersection();
-		result.setParameter(v,this.middle,inRay);
+		result.setParameter(v,this.basePoint,inRay);
 		result.setSceneElement(this);
 		result.setNormale(normal);
 		result.processIntersection();
+		
+		inRay.returnPosition();
+		
 		return result;
 	}
 
@@ -175,9 +177,4 @@ public class Box3D extends SceneElement{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-//	@Override
-//	public boolean doesIntersectRay(LightRay inRay) {
-//		return false;
-//	}
 }

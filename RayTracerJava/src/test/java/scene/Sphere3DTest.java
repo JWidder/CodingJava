@@ -255,7 +255,38 @@ public class Sphere3DTest {
 			//TODO Add does intersect 
 		}
 
+		@Nested
+		@ExtendWith(MockitoExtension.class)
+		class testMoveShere{
+			@Test
+			public void test_moveSphereNormal() {
+				Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+				ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
+
+				double radius=2.0;
+				Point3D mittelPunkt = new Point3D(0.0,0.0,0.0);
+				Sphere3D testSphere = new Sphere3D(mittelPunkt,radius,ColorValue.BLACK,testShading,testMaterial);
+				
+				LightRay testLightRay = new LightRay(new Point3D(-2*radius,0.0,0.0),new Point3D(-radius,0.0,0.0));
+
+				// Abstand in Ursprungslage
+				testSphere.move(new Dir3D (0.0,0.0,0.0));
+				Intersection testIntersection = testSphere.intersectRay(testLightRay);
+				assertEquals (2.0,testIntersection.getParameter());
+
+				// Verschieben
+				testSphere.move(new Dir3D (1.0,0.0,0.0));
+				testIntersection = testSphere.intersectRay(testLightRay);
+				assertEquals (3.0,testIntersection.getParameter());
+
+				// Zurückbewegen
+				testSphere.move(new Dir3D (-1.0,0.0,0.0));
+				testIntersection = testSphere.intersectRay(testLightRay);
+				assertEquals (2.0,testIntersection.getParameter());
+			}
+		}
 	}
+	
 
 	/**
 	 * @author Johanns Widder
