@@ -16,10 +16,6 @@ public class Box3D extends SceneElement{
 	double xLen;
 	double yLen;
 	double zLen;
-	Point3D middle;
-	double xAngle;
-	double yAngle;
-	double zAngle;
 	
 	/**
 	 * Crate default box
@@ -36,7 +32,7 @@ public class Box3D extends SceneElement{
 	}
 
 	/**
-	 * Crate arbitrary sized Box
+	 * Crate arbitrary sized Box located in the center of the 
 	 */
 	Box3D(double in_xLen,double in_yLen, double in_zLen) 
 	{
@@ -167,12 +163,6 @@ public class Box3D extends SceneElement{
 	@Override
 	public Color getValueColor() {
 		return null;
-	}
-
-	@Override
-	public ISceneElement move(Dir3D dir) {
-		this.middle.movePoint(dir);
-		return this;
 	}
 
 	@Override

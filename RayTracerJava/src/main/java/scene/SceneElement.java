@@ -15,7 +15,11 @@ import util.Vector3D;
 public abstract class SceneElement implements ISceneElement{
 	Material typMaterial;
 	ColorCalculation ligthShading;
-	
+	Point3D middle;
+	double xAngle;
+	double yAngle;
+	double zAngle;
+
 	public SceneElement() {
 		return;
 	}
@@ -41,8 +45,8 @@ public abstract class SceneElement implements ISceneElement{
 
 	@Override
 	public ISceneElement move(Dir3D dir) {
-		// XXX Auto-generated method stub
-		return null;
+		this.middle.movePoint(dir);
+		return this;
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import util.Material;
  *
  */
 public class Sphere3D extends SceneElement{
-	Point3D mittelPunkt;
 	double radius;
 	Color valueColor;
 
@@ -28,7 +27,7 @@ public class Sphere3D extends SceneElement{
 	 * @param inMaterial
 	 */
 	public Sphere3D(Point3D mittelPunkt, double radius, ColorValue valueColors, ColorCalculation inShading, Material inMaterial) {
-		this.mittelPunkt = mittelPunkt;
+		this.middle = mittelPunkt;
 		this.radius = radius;
 		this.valueColor= new Color(valueColors);
 		this.ligthShading=inShading;
@@ -92,7 +91,7 @@ public class Sphere3D extends SceneElement{
 		// r this.radius
 				
 		double temp_a = Util.dot(inRay.getDirection(),inRay.getDirection());
-		Dir3D temp_dir = Util.difference(inRay.getBasis(), this.mittelPunkt);
+		Dir3D temp_dir = Util.difference(inRay.getBasis(), this.middle);
 		double temp_b = 2.0 * Util.dot(inRay.getDirection(), temp_dir);
 		double temp_c = Util.dot(temp_dir,temp_dir) - this.radius * this.radius;
 		
@@ -272,7 +271,7 @@ public class Sphere3D extends SceneElement{
 
 	
 	Point3D getMittelPunkt() {
-		return this.mittelPunkt;
+		return this.middle;
 	}
 	
 	double getRadius() {
@@ -286,14 +285,8 @@ public class Sphere3D extends SceneElement{
 
 	@Override
 	public Vector3D getNormal(Point3D inPoint) {
-		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, this.mittelPunkt));
+		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, this.middle));
 		normale.normalize();
 		return normale;
-	}
-
-	@Override
-	public ISceneElement move(Dir3D dir) {
-		this.mittelPunkt.movePoint(dir);
-		return this;
 	}
 }

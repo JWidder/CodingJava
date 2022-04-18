@@ -59,11 +59,6 @@ public class Plane3D extends SceneElement {
 	}
 
 	@Override
-	public ISceneElement move(Dir3D dir) {
-		return null;
-	}
-
-	@Override
 	public boolean doesIntersectRay(LightRay inRay) {
 		// TODO Auto-generated method stub
 		return false;
