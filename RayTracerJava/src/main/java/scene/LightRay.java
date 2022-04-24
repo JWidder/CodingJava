@@ -84,9 +84,9 @@ public class LightRay {
 		return this.direction;
 	}
 	
-	public void adjustPosition (Dir3D direction) {
-		this.adjustment=direction;
-		this.basis.movePoint(- direction.getxDir(), - direction.getyDir(), - direction.getzDir());
+	public void adjustPosition (Dir3D direction1) {
+		this.adjustment=direction1;
+		this.basis.movePoint(- direction1.getxDir(), - direction1.getyDir(), - direction1.getzDir());
 	}
 	
 	public void returnPosition() {

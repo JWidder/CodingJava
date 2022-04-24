@@ -3,20 +3,23 @@ package scene;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import generator.Intersection;
+import util.BasicColorCalculation;
+import util.ColorCalculation;
 import util.ColorValue;
 import util.Dir3D;
 import util.Material;
-import util.BasicColorCalculation;
 import util.Point3D;
 import util.TypeIntersection;
-import util.ColorCalculation;
 
 /**
  * UnitTest Klasse Spere3D
@@ -26,6 +29,20 @@ import util.ColorCalculation;
  */
 public class Sphere3DTest {
 
+	@Nested
+	class TestCSV{
+		@Test
+		@DisplayName("Should calculate the correct sum")
+	    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
+	    @CsvSource({
+	            "1, 1, 2",
+	            "2, 3, 5"
+	    })
+		public final void testCSVData() throws  Exception{
+			assertEquals (1,1);
+		}
+	}
+	
 	@Nested
 	class Test_Constructor{
 		@Test
