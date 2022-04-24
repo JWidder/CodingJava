@@ -49,11 +49,6 @@ public class Plane3D extends SceneElement {
 	}
 
 	@Override
-	public Vector3D getNormal(Point3D inPoint) {
-		return null;
-	}
-
-	@Override
 	public Color getValueColor() {
 		return null;
 	}

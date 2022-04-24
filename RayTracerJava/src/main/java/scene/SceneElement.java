@@ -1,12 +1,9 @@
 package scene;
 
-import generator.Intersection;
 import util.Color;
 import util.Dir3D;
 import util.Material;
-import util.Point3D;
 import util.ColorCalculation;
-import util.Vector3D;
 
 /**
  * @author Johannes Widder
@@ -44,6 +41,12 @@ public abstract class SceneElement implements ISceneElement{
 	@Override
 	public Dir3D getMove() {
 		return this.moved;
+	}
+
+	@Override
+	public ISceneElement rotate(double xValue, double yValue, double zValue) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

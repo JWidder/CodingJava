@@ -123,12 +123,21 @@ public class Util{
 	 * @return Richtung des reflektierten Strahls
 	 */
 	public static Dir3D calculateReflectedDir(Intersection nextIntersection, Dir3D inDirection ) {
-		Point3D point = nextIntersection.getIntersectionPoint();
-		Dir3D n = nextIntersection.getRefElement().getNormal(point).getDirection().normalize();
+		Dir3D n = nextIntersection.getNormale().normalize();
 		Dir3D ri = inDirection.normalize();
 		double f = Util.dot(ri, n);
 		// https://www.it-swarm.com.de/de/java/wie-erreicht-man-eine-verkettung-von-methoden-java/1043854209/
 		Dir3D rn = ri.minus(n.scale(f).scale(2.0));
 		return rn;
 	}
+	
+	/**
+	 * Koordinatentransformation
+	 * Eulersche Winkel
+	 * 
+	 */
+	void KoordinatenTransformation(Dir3D inVektor,double phix,double phiy,double phiz) {
+		
+	}
+		
 }

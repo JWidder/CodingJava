@@ -57,7 +57,6 @@ public class ShadowColorTest {
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
 			
 			when(refIntersection.getIntersectionPoint()).thenReturn(testIntersectionPoint);
-			when(refIntersection.getRefElement().getNormal(testIntersectionPoint).getDirection().normalize()).thenReturn(new Dir3D(1.0, 0.0,0.0));
 			LightRay testLightRay = new LightRay(testIntersectionPoint,new Dir3D(1.0,1.0,0.0).normalize());
 			when(refIntersection.getOutRay()).thenReturn(testLightRay);
 
@@ -86,7 +85,6 @@ public class ShadowColorTest {
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
 			Point3D point = new Point3D(0.0, 0.0, 0.0);
 			when(refIntersection.getIntersectionPoint()).thenReturn(point);
-			when(refIntersection.getRefElement().getNormal(point).getDirection()).thenReturn(new Dir3D(0.0,0.0,1.0));
 			when(refIntersection.getOutRay().getDirection()).thenReturn(new Dir3D(point,new Point3D(0.1, 0.0, 1.0)));
 			
 			ShadowColor testShadowColor = new ShadowColor(testScene,0.5);

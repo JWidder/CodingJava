@@ -45,6 +45,6 @@ public class RayTracer
 		testScene.addElement(testLight);
 		
 		PictureGenerator generator = new PictureGenerator(1200,1200,testScene);
-		generator.createPicture(1);
+		generator.createPicture(1,"test_%d.ppm");
 	}
 }

@@ -282,8 +282,7 @@ public class Sphere3D extends SceneElement{
 		return this.radius;
 	}
 
-	@Override
-	public Vector3D getNormal(Point3D inPoint) {
+	private Vector3D getNormal(Point3D inPoint) {
 		Vector3D normale = new Vector3D(inPoint, util.Util.difference(inPoint, this.middlePoint));
 		normale.normalize();
 		return normale;

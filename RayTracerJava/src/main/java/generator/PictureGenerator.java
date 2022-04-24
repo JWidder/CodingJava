@@ -54,8 +54,8 @@ public class PictureGenerator {
 	/**
 	 * @param pictureNumber Id of the generated picture.
 	 */
-	public void createPicture(int pictureNumber) {
-		OutputPicture bildAusgabe = new OutputPicture(String.format("test_%d.ppm", pictureNumber), this.xLen,
+	public void createPicture(int pictureNumber,String name) {
+		OutputPicture bildAusgabe = new OutputPicture(String.format(name, pictureNumber), this.xLen,
 				this.yLen);
 		for (int yCount = 0; yCount < this.yLen; yCount++) {
 			for (int xCount = 0; xCount < this.xLen; xCount++) {

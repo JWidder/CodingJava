@@ -5,7 +5,6 @@ import util.Color;
 import util.Dir3D;
 import util.Point3D;
 import util.ColorCalculation;
-import util.Vector3D;
 
 /**
  * @author Johannes Widder
@@ -13,6 +12,7 @@ import util.Vector3D;
  * TODO Box3D erstellen
  */
 public class Box3D extends SceneElement{
+	
 	double xLen;
 	double yLen;
 	double zLen;
@@ -68,7 +68,7 @@ public class Box3D extends SceneElement{
 		double temp = - sbx/ex;
 		double s = sby + ey * temp;
 		double t = sbz + ez * temp;
-		if ((s >= 0 )&&(s<=this.yLen)&&(t >= 0 )&&(t<=this.zLen)) {
+		if ((s >= -this.yLen )&&(s<=this.yLen)&&(t >= -this.zLen )&&(t<=this.zLen)) {
 			if (temp<v) {
 				v=temp;
 				normal.setxDir(-1.0);
@@ -81,7 +81,7 @@ public class Box3D extends SceneElement{
 		temp=(this.xLen-sbx)/ex;
 		s = sby - ey * temp;
 		t = sbz - ez * temp;
-		if ((s >= 0 )&&(s<=this.yLen)&&(t >= 0 )&&(t<=this.zLen)) {
+		if ((s >= -this.yLen )&&(s<=this.yLen)&&(t >= -this.zLen)&&(t<=this.zLen)) {
 			if (temp<v) {
 				v=temp;
 				normal.setxDir(1.0);
@@ -94,7 +94,7 @@ public class Box3D extends SceneElement{
 		temp = - sby/ey;
 		s = sbx - ex * temp;
 		t = sbz - ez * temp;
-		if ((s >= 0 )&&(s<=this.xLen)&&(t >= 0 )&&(t<=this.zLen)) {
+		if ((s >= -this.xLen )&&(s<=this.xLen)&&(t >= -this.zLen )&&(t<=this.zLen)) {
 			if (temp<v) {
 				v=temp;
 				normal.setxDir(0.0);
@@ -107,7 +107,7 @@ public class Box3D extends SceneElement{
 		temp=(this.yLen-sby)/ey;
 		s = sbx - ex * temp;
 		t = sbz - ez * temp;
-		if ((s >= 0 )&&(s<=this.xLen)&&(t >= 0 )&&(t<=this.zLen)) {
+		if ((s >= -this.xLen )&&(s<=this.xLen)&&(t >= -this.zLen )&&(t<=this.zLen)) {
 			if (temp<v) {
 				v=temp;
 				normal.setxDir(0.0);
@@ -120,7 +120,7 @@ public class Box3D extends SceneElement{
 		temp= - sbz / ez;
 		s = sbx - ex * temp;
 		t = sby - ey * temp;
-		if ((s >= 0 )&&(s<=this.xLen)&&(t >= 0 )&&(t<=this.yLen)) {
+		if ((s >= -this.xLen )&&(s<=this.xLen)&&(t >= -this.yLen )&&(t<=this.yLen)) {
 			if (temp<v) {
 				v=temp;
 				normal.setxDir(0.0);
@@ -133,7 +133,7 @@ public class Box3D extends SceneElement{
 		temp=(this.zLen-sbz)/ez;
 		s = sbx - ex * temp;
 		t = sby - ey * temp;
-		if ((s >= 0 )&&(s<=this.xLen)&&(t >= 0 )&&(t<=this.yLen)) {
+		if ((s >= -this.xLen )&&(s<=this.xLen)&&(t >= -this.yLen )&&(t<=this.yLen)) {
 			if (temp<v) {
 				v=temp;
 				normal.setxDir(0.0);
@@ -155,11 +155,6 @@ public class Box3D extends SceneElement{
 		inRay.returnPosition();
 		
 		return result;
-	}
-
-	@Override
-	public Vector3D getNormal(Point3D inPoint) {
-		return null;
 	}
 
 	@Override

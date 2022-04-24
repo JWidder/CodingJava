@@ -153,7 +153,7 @@ public class IntersectionTest {
 			Intersection testIntersection = new Intersection();
 			testIntersection.setParameter(1.0,new Point3D(0.0,0.0,0.0),testLightRay);
 			testIntersection.setSceneElement(testSceneElement);
-			testIntersection.setNormale(testSceneElement.getNormal(new Point3D(0.0,0.0,0.0)).getDirection());
+			testIntersection.setNormale(new Dir3D(new Point3D(0.0,0.0,0.0),new Point3D(0.0,0.0,1.0)));
 			testIntersection.processIntersection();
 
 			assertEquals(testIntersection.getOutRay().getDirection().getxDir(),0.5*Math.sqrt(2.0));

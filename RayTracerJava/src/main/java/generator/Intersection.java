@@ -163,6 +163,9 @@ public class Intersection {
 		return this.statusIntersection;
 	}
 
+	/**
+	 * @param statusIntersection
+	 */
 	public void setStatusIntersection(StatusIntersection statusIntersection) {
 		this.statusIntersection = statusIntersection;
 	}

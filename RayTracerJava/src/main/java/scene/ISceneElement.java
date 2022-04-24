@@ -4,9 +4,7 @@ import generator.Intersection;
 import util.Color;
 import util.Dir3D;
 import util.Material;
-import util.Point3D;
 import util.ColorCalculation;
-import util.Vector3D;
 
 /**
  * @author Johannes Widder
@@ -21,11 +19,7 @@ public interface ISceneElement {
 	 *  return MaxDouble if there is no intersection. 
 	 */
 	Intersection intersectRay(LightRay inRay) ;
-	/**
-	 * @param inPoint
-	 * @return {@link generator.Intersection}
-	 */
-	Vector3D getNormal(Point3D inPoint);
+
 	/**
 	 * @return {@link util.Vector3D}
 	 */
@@ -35,6 +29,14 @@ public interface ISceneElement {
 	 * @return {@link scene.ISceneElement}
 	 */
 	public ISceneElement move(Dir3D dir);
+	
+	/**
+	 * @param xValue
+	 * @param yValue
+	 * @param zValue
+	 * @return
+	 */
+	public ISceneElement rotate(double xValue, double yValue, double zValue);
 	/**
 	 * @param inLightShading
 	 */

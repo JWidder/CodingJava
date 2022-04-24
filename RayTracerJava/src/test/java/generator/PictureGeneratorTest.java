@@ -31,7 +31,7 @@ public class PictureGeneratorTest {
 		inScene.addElement(new Sphere3D(new Point3D(150.0,0.0,-1.5), 0.5,ColorValue.GREEN,testShading,new Material()));
 		
 		PictureGenerator testPictureGenerator = new PictureGenerator(800,600,inScene);
-		testPictureGenerator.createPicture(1);
+		testPictureGenerator.createPicture(1,"testScene_%d.ppm");
 	}
 
 	/**
