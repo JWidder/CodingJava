@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +34,23 @@ import util.TypeIntersection;
  */
 public class Sphere3DTest {
 
+    @DisplayName("Should calculate the correct sum")
+    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")	
+    @CsvSource({
+        "1, 1, 2 , 0.0 , 0.0, 0.0, ",
+        "2, 3, 5"
+    })
+    void sum(int a, int b, int sum) {
+        assertEquals(sum, a + b);
+    }
+    
+    @DisplayName("Should calculate the correct sum")
+    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
+    @CsvFileSource(resources = "src/test/java/scene/Sphere3DTest.csv")
+    void sum_file(int a, int b, int sum) {
+        assertEquals(sum, a + b);
+    }
+    
 	@Nested
 	class TestCSV{
 		@Test
