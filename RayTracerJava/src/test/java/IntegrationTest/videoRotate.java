@@ -19,7 +19,6 @@ public class videoRotate {
 	}
 
 	public static void main(String[] args) {
-		final double abstand=20.0;
 		final double entfernung=15.0;
 		
 		Scene testScene = new Scene();

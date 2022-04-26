@@ -29,7 +29,6 @@ public class PictureGenerator {
 	double deltaScreen;
 
 	private Point3D positionCamera;
-	// private Scene _scene;
 	SceneTracer sceneTracer;
 
 	/**

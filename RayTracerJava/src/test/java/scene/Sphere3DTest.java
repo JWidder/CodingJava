@@ -46,7 +46,7 @@ public class Sphere3DTest {
     
     @DisplayName("Should calculate the correct sum")
     @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
-    @CsvFileSource(resources = "src/test/java/scene/Sphere3DTest.csv")
+    @CsvFileSource(resources = "/simple.csv")
     void sum_file(int a, int b, int sum) {
         assertEquals(sum, a + b);
     }
