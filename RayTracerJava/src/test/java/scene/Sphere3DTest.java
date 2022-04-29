@@ -34,7 +34,7 @@ import util.TypeIntersection;
  */
 public class Sphere3DTest {
 
-    @DisplayName("Should calculate the correct sum")
+    @DisplayName("Test 1 Should calculate the correct sum")
     @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")	
     @CsvSource({
         "1, 1, 2 , 0.0 , 0.0, 0.0, ",
@@ -44,17 +44,20 @@ public class Sphere3DTest {
         assertEquals(sum, a + b);
     }
     
-    @DisplayName("Should calculate the correct sum")
-    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
-    @CsvFileSource(resources = "/simple.csv")
-    void sum_file(int a, int b, int sum) {
-        assertEquals(sum, a + b);
+//    @DisplayName("Should calculate the correct sum")
+//    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
+//    @CsvFileSource(resources = "/simple.csv")
+    @DisplayName("Test 2 Should calculate the correct sum")
+    @ParameterizedTest (name = "{index} => base={0}, a={1}, b={2}, sum={3}")
+    @CsvFileSource(resources = "/FileName.csv", numLinesToSkip = 0)
+    void sum1(double base, double a, double b, double sum) {
+        assertEquals(sum, base + a + b);
     }
     
 	@Nested
 	class TestCSV{
 		@Test
-		@DisplayName("Should calculate the correct sum")
+		@DisplayName("Test 3 hould calculate the correct sum")
 	    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
 	    @CsvSource({
 	            "1, 1, 2",
