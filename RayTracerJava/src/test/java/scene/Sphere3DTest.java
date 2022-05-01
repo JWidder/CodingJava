@@ -44,14 +44,25 @@ public class Sphere3DTest {
         assertEquals(sum, a + b);
     }
     
-//    @DisplayName("Should calculate the correct sum")
-//    @ParameterizedTest(name = "{index} => a={0}, b={1}, sum={2}")
-//    @CsvFileSource(resources = "/simple.csv")
-    @DisplayName("Test 2 Should calculate the correct sum")
-    @ParameterizedTest (name = "{index} => base={0}, a={1}, b={2}, sum={3}")
-    @CsvFileSource(resources = "/FileName.csv", numLinesToSkip = 0)
-    void sum1(double base, double a, double b, double sum) {
-        assertEquals(sum, base + a + b);
+    @DisplayName("Test Intersection Spere Lightray. Spere in the center of coordination system")
+    @ParameterizedTest (name="{index} => Start({0}|{1}|{2}) Dir({3}|{4}|{5}) Schnitt:({6}|{7}|{8})")
+    @CsvFileSource(resources = "/TestIntersectSphere.csv", numLinesToSkip = 1)
+    void testIntersection(double x_point,double y_point,double z_point,double x_dir,double y_dir,double z_dir, double x_pos,double y_pos,double z_pos) {
+		double radius = 2.0;
+		Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
+		Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+		ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
+
+		Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+		LightRay testRay = new LightRay(new Point3D(x_point,y_point,z_point), new Dir3D(x_dir,y_dir,z_dir));
+
+		Intersection result = sphere.intersectRay(testRay);
+		
+		assertEquals(x_pos, result.getIntersectionPoint().getxPos());
+		assertEquals(y_pos, result.getIntersectionPoint().getyPos());
+		assertEquals(z_pos, result.getIntersectionPoint().getzPos());
+		
+		assertEquals("test", result.getTypeIntersection().toString());
     }
     
 	@Nested
@@ -115,9 +126,14 @@ public class Sphere3DTest {
 	 */
 	@Nested
 	class Test_Intersection {
-		
+	    @DisplayName("Test 2 Should calculate the correct sum")
+	    @ParameterizedTest (name="x_point{0},y_point{1},z_point{2}  x_dir{3},y_dir{4},z_dir{5}  x_pos{6},y_pos{7},z_pos{8} ")
+	    @CsvFileSource(resources = "/TestIntersectSphere.csv", numLinesToSkip = 1)
+	    void sum1(double x_point, double y_point, double z_point, double x_dir, double y_dir, double z_dir, double x_pos, double y_pos, double z_pos)  {
+	        assertEquals(x_pos,x_pos);
+	    }
 		/**
-		 * Designbeschreibung siehe dokuemnt
+		 * Designbeschreibung siehe Dokument
 		 * @throws Exception 
 		 */
 		@Test
