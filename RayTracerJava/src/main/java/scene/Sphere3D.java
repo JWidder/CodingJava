@@ -130,7 +130,7 @@ public class Sphere3D extends SceneElement{
 				else {
 					// Case 2c
 					resultIntersection.setTypeIntersection(TypeIntersection.TOUCH);
-					resultIntersection.setStatusIntersection(StatusIntersection.MISS);
+					resultIntersection.setStatusIntersection(StatusIntersection.INTERSECT);
 				}
 			}
 			else
