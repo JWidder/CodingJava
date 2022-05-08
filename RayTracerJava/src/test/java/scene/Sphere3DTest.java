@@ -1,6 +1,7 @@
 package scene;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import org.junit.jupiter.api.DisplayName;
@@ -8,12 +9,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -47,7 +45,7 @@ public class Sphere3DTest {
     @DisplayName("Test Intersection Spere Lightray. Spere in the center of coordination system")
     @ParameterizedTest (name="{index} => no: {0} Start({1}|{2}|{3}) Dir({4}|{5}|{6}) Schnitt:({7}|{8}|{9}) Typ:{10}  Stats:{11}")
     @CsvFileSource(resources = "/TestIntersectSphere.csv", numLinesToSkip = 0)
-    void testIntersection(double x_point,double y_point,double z_point,double x_dir,double y_dir,double z_dir, double x_pos,double y_pos,double z_pos,String typ,String status) {
+    void testIntersection(double no,double x_point,double y_point,double z_point,double x_dir,double y_dir,double z_dir, double x_pos,double y_pos,double z_pos,String typ,String status) {
 		double radius = 2.0;
 		Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
 		Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
@@ -60,7 +58,9 @@ public class Sphere3DTest {
 		
 		switch(typ) {
 			case "INTERSECTION":
+			case "INNER_INTERSECTION":
 			case "TOUCH":
+			case "BEHIND_INTERSECTION":
 				assertEquals(x_pos, result.getIntersectionPoint().getxPos());
 				assertEquals(y_pos, result.getIntersectionPoint().getyPos());
 				assertEquals(z_pos, result.getIntersectionPoint().getzPos());
@@ -70,6 +70,8 @@ public class Sphere3DTest {
 			case "MISS":
 				assertEquals(null,result.getIntersectionPoint());
 				break;
+			default:
+				assertTrue(false);
 		}
     }
     
