@@ -57,19 +57,13 @@ public class Sphere3DTest {
 				assertEquals(status, result.getStatusIntersection().toString());
 				break;
 			case "TOUCH":
-//				if (result.getStatusIntersection()==StatusIntersection.MISS) {
-//					assertEquals(null,result.getIntersectionPoint());
-//				}
-//				else {
-					assertEquals(x_pos, result.getIntersectionPoint().getxPos());
-					assertEquals(y_pos, result.getIntersectionPoint().getyPos());
-					assertEquals(z_pos, result.getIntersectionPoint().getzPos());
-					assertEquals(typ, result.getTypeIntersection().toString());
-					assertEquals(status, result.getStatusIntersection().toString());
-//					break;
-//				}
+				assertEquals(x_pos, result.getIntersectionPoint().getxPos());
+				assertEquals(y_pos, result.getIntersectionPoint().getyPos());
+				assertEquals(z_pos, result.getIntersectionPoint().getzPos());
+				assertEquals(typ, result.getTypeIntersection().toString());
+				assertEquals(status, result.getStatusIntersection().toString());
 				break;
-			case "TEST":
+			case "MISS":
 				assertEquals(null,result.getIntersectionPoint());
 				break;
 			default:

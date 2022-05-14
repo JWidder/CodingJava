@@ -24,7 +24,6 @@ public class Box3DTest {
 	@Nested
 	public class TetRayBoxIntersection {
 
-		@SuppressWarnings("javadoc")
 		@Nested
 		public class TestRayBoxIntersection_1_Vorne {
 			/**
@@ -70,7 +69,6 @@ public class Box3DTest {
 			}
 		}
 
-		@SuppressWarnings("javadoc")
 		@Nested
 		public class TestBoxHinten {
 			/**
