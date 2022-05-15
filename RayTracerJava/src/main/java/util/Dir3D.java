@@ -4,7 +4,6 @@ package util;
  * @author Johannes Widder
  *
  */
-@SuppressWarnings("javadoc")
 public class Dir3D {
 	double[] dir;
 
@@ -42,6 +41,11 @@ public class Dir3D {
 		this.setxDir(endPoint.getxPos() - startPoint.getxPos());
 		this.setyDir(endPoint.getyPos() - startPoint.getyPos());
 		this.setzDir(endPoint.getzPos() - startPoint.getzPos());
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s: x=%5.3f y=%5.3f z=%5.3f", getClass().getName(),this.dir[0],this.dir[1],this.dir[2]);
 	}
 	
 	/**

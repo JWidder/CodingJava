@@ -9,11 +9,11 @@ import util.Util;
  * @author Johannes Widder
  *
  */
-public class LightRay{
+public class LightRay {
 	protected Point3D basis;
 	protected Dir3D direction;
-	// Color RayColor
-
+	protected Dir3D adjustment;
+	
 	/**
 	 * 
 	 */
@@ -49,6 +49,11 @@ public class LightRay{
 		this.basis=startPunkt;
 		this.direction=Util.difference(endPoint, startPunkt).normalize();
 	}
+
+	@Override
+	public String toString() {
+		return "[" + this.basis.toString() + " " + this.direction.toString()+"]";
+	}
 	
 	/**
 	 * @param parameter
@@ -77,5 +82,14 @@ public class LightRay{
 	 */
 	public Dir3D getDirection() {
 		return this.direction;
+	}
+	
+	public void adjustPosition (Dir3D direction1) {
+		this.adjustment=direction1;
+		this.basis.movePoint(- direction1.getxDir(), - direction1.getyDir(), - direction1.getzDir());
+	}
+	
+	public void returnPosition() {
+		this.basis.movePoint(this.adjustment);
 	}
 }

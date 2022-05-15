@@ -1,11 +1,17 @@
 package util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import generator.Intersection;
 import scene.LightRay;
+import scene.Scene;
 import scene.Sphere3D;
 
 /**
@@ -61,17 +67,20 @@ public class UtilTest {
 	@Nested
 	class test_intersection{
 		@Test
+		@ExtendWith(MockitoExtension.class)
 		public void testDoesIntersect_Intersection() throws Exception {
 			//arrange
+			Scene testScene= Mockito.mock(Scene.class, RETURNS_DEEP_STUBS);
+
 			Point3D basePoint = new Point3D(-1.0,0.0,0.0);
 			Dir3D direection = new Dir3D(1.0,0,0.0);
 			LightRay ray = new LightRay(basePoint, direection);
 			
 			Point3D mittelPunkt = new Point3D(2.0,0.0,0.0);
 			double radius = 1.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1,0.5,testScene);
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading,new Material());
 			//act 
 			// boolean actual = Util.doesIntersect(ray, sphere);
 			Intersection actual = sphere.intersectRay(ray);
@@ -83,17 +92,20 @@ public class UtilTest {
 			assertEquals(2.0, actual.getParameter(),UtilTest.this.epsilon);
 		}		
 		@Test
+		@ExtendWith(MockitoExtension.class)
 		public void testDoesIntersect_NoIntersection() throws Exception {
 			//arrange
+			Scene testScene= Mockito.mock(Scene.class, RETURNS_DEEP_STUBS);
+			
 			Point3D basePoint = new Point3D(-1.0,0.0,0.0);
 			Dir3D direection = new Dir3D(1.0,0,0.0);
 			LightRay ray = new LightRay(basePoint, direection);
 			
 			Point3D mittelPunkt = new Point3D(2.0,10.0,0.0);
 			double radius = 1.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			ColorCalculation testShading = new BasicColorCalculation(0.1,0.5,testScene);
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading,new Material());
 			//act 
 			// boolean actual = Util.doesIntersect(ray, sphere);
 			Intersection actual = sphere.intersectRay(ray);

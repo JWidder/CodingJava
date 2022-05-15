@@ -1,53 +1,108 @@
 package scene;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import generator.Intersection;
+import util.BasicColorCalculation;
+import util.ColorCalculation;
 import util.ColorValue;
 import util.Dir3D;
-import util.Intersection;
-import util.BasicColorCalculation;
+import util.Material;
 import util.Point3D;
-import util.ReflectedColor;
-import util.Util;
+import util.TypeIntersection;
 
 /**
- * Unit Testklasse Spere3D
+ * UnitTest Klasse Spere3D
  * 
  * @author Johannes Widder
  *
  */
 public class Sphere3DTest {
 
+    @DisplayName("Test Intersection Spere Lightray. Spere in the center of coordination system")
+    @ParameterizedTest (name="{index} => no: {0} Start({1}|{2}|{3}) Dir({4}|{5}|{6}) Schnitt:({7}|{8}|{9}) Typ:{10}  Stats:{11}")
+    @CsvFileSource(resources = "/TestIntersectSphere.csv", numLinesToSkip = 0)
+    void testIntersection(double no,double x_point,double y_point,double z_point,double x_dir,double y_dir,double z_dir, double x_pos,double y_pos,double z_pos,String typ,String status) {
+		double radius = 2.0;
+		Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
+		Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+		ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
+
+		Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+		LightRay testRay = new LightRay(new Point3D(x_point,y_point,z_point), new Dir3D(x_dir,y_dir,z_dir));
+
+		Intersection result = sphere.intersectRay(testRay);
+		
+		switch(typ) {
+			case "INTERSECTION":
+			case "INNER_INTERSECTION":
+			case "BEHIND_INTERSECTION":
+				assertEquals(x_pos, result.getIntersectionPoint().getxPos());
+				assertEquals(y_pos, result.getIntersectionPoint().getyPos());
+				assertEquals(z_pos, result.getIntersectionPoint().getzPos());
+				assertEquals(typ, result.getTypeIntersection().toString());
+				assertEquals(status, result.getStatusIntersection().toString());
+				break;
+			case "TOUCH":
+				assertEquals(x_pos, result.getIntersectionPoint().getxPos());
+				assertEquals(y_pos, result.getIntersectionPoint().getyPos());
+				assertEquals(z_pos, result.getIntersectionPoint().getzPos());
+				assertEquals(typ, result.getTypeIntersection().toString());
+				assertEquals(status, result.getStatusIntersection().toString());
+				break;
+			case "MISS":
+				assertEquals(null,result.getIntersectionPoint());
+				break;
+			default:
+				assertTrue(false);
+		}
+    }
+    
+
 	@Nested
-	class testConstructor{
+	class Test_Constructor{
 		@Test
+		@ExtendWith(MockitoExtension.class)
 		public final void testSphere3D() throws Exception {
 			Point3D mittelPunkt = new Point3D();
 			double radius = 1.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			Scene testScene= Mockito.mock(Scene.class, RETURNS_DEEP_STUBS);
 
-			Sphere3D testSphere3d = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading);
+			ColorCalculation testShading = new BasicColorCalculation(0.1,0.5,testScene);
+
+			Sphere3D testSphere3d = new Sphere3D(mittelPunkt, radius,ColorValue.GREEN,testShading,new Material());
 			
 			assertEquals(1.0, testSphere3d.getRadius(),0.001);
 		}
 	}
 	
 	@Nested
-	class testGetterSetter{
+	class Test_GetterSetter{
 		@Test
+		@ExtendWith(MockitoExtension.class)
 		public void testBasicGetterSetter() throws Exception {
 			// preparation
 			double radius=1.0;
 			Point3D center = new Point3D(1.0,2.0,3.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			Scene testScene= Mockito.mock(Scene.class, RETURNS_DEEP_STUBS);
+
+			ColorCalculation testShading = new BasicColorCalculation(0.1,0.5,testScene);
 
 			// action
-			Sphere3D testSphere = new Sphere3D(center, radius,ColorValue.GREEN,testShading);
+			Sphere3D testSphere = new Sphere3D(center, radius,ColorValue.GREEN,testShading,new Material());
 			
 			// assert
 			assertEquals(1.0, testSphere.getRadius(),0.0001);
@@ -57,103 +112,226 @@ public class Sphere3DTest {
 		}		
 	}
 	
+	/**
+	 * Test Schnitt LightRay Sphere different cases 
+	 * 
+	 * @author Johannes Widder
+	 */
 	@Nested
-	class testIntersection {
+	class Test_Intersection {
+		/**
+		 * Designbeschreibung siehe Dokument
+		 * @throws Exception 
+		 */
 		@Test
-		public void testIntersection_Standard() throws Exception {
+		@ExtendWith(MockitoExtension.class)
+		public void test_1a_LightRayMissesSphere() throws Exception {
 
 			double radius = 1.0;
-			Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+			Point3D mittelPunkt = new Point3D(-2*radius, 2*radius, 0.0);
 
-			LightRay testRay = new LightRay(new Point3D(-2.0, 0.0, 0.0), new Dir3D(1.0,0,0));
+			Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+			ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
+
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+			LightRay testRay = new LightRay(new Point3D(0.0, 0.0, 0.0), new Dir3D(1.0,0,0));
 
 			Intersection result = sphere.intersectRay(testRay);
-			assertEquals(result.getParameter(), 1.0, 0.00001);
-			assertEquals(result.getRefElement(),sphere);
+			
+			assertEquals(Double.MAX_VALUE,result.getParameter(), 0.00001);
+			assertEquals(null,result.getRefElement());
+			assertEquals(TypeIntersection.MISSES, result.getTypeIntersection());
+			assertEquals(StatusIntersection.MISS, result.getStatusIntersection());
+			
+			//TODO Add does intersect 
 		}
 
+//		@Test
+//		@ExtendWith(MockitoExtension.class)
+//		public void test_2a_LightRayTouchesSphere() throws Exception {
+//			double radius = 1.0;
+//
+//			Point3D mittelPunkt = new Point3D(radius, radius, 0.0);
+//			Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+//			ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
+//
+//			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+//			LightRay testRay = new LightRay(new Point3D(0.0,0.0,0.0), new Dir3D(1.0,0.0,0.0));
+//
+//			Intersection result = sphere.intersectRay(testRay);
+//			
+//			assertEquals(radius,result.getParameter(), 0.00001);
+//			assertEquals(sphere,result.getRefElement());
+//			assertEquals(TypeIntersection.TOUCH, result.getTypeIntersection());
+//			assertEquals(StatusIntersection.INTERSECT, result.getStatusIntersection());
+//			
+//			//TODO Add does intersect 
+//		}
+
+
+
 		@Test
-		public void testIntersectionInner() throws Exception {
-			double radius = 2.5;
+		@ExtendWith(MockitoExtension.class)
+		public void test_3d_LightRayStartOnSphere() throws Exception {
+			double radius = 1.0;
+
 			Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+			Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+			ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
-
-			Point3D cameraPos = new Point3D(-5.0, 0.0, 0.0);
-			Point3D screenPoint = new Point3D(0.0, 0.0, 0.0);
-			Dir3D direction = Util.difference(screenPoint, cameraPos);
-
-			LightRay testRay = new LightRay(cameraPos, direction);
+			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+			LightRay testRay = new LightRay(new Point3D(radius,0.0,0.0), new Dir3D(1.0,0.0,0.0));
 
 			Intersection result = sphere.intersectRay(testRay);
-			assertEquals(result.getParameter(), 2.5, 0.00001);
-
-			sphere.move(new Dir3D(radius, 0.0, 0.0));
-			result = sphere.intersectRay(testRay);
-			assertEquals(result.getParameter(), 5.0, 0.00001);
+			
+			assertEquals(Double.MAX_VALUE,result.getParameter(), 0.00001);
+			assertEquals(sphere,result.getRefElement());
+			assertEquals(TypeIntersection.BEHIND_TOUCH, result.getTypeIntersection());
+			assertEquals(StatusIntersection.MISS, result.getStatusIntersection());
+			
+			//TODO Add does intersect 
 		}
 
-		@Test
-		public void testIntersectionNone() throws Exception {
-			double radius = 2.5;
-			Point3D mittelPunkt = new Point3D(radius, 2 * radius, 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
+		@Nested
+		@ExtendWith(MockitoExtension.class)
+		class testMoveShere{
+			@Test
+			public void test_moveSphereNormal() {
+				Material testMaterial = Mockito.mock(Material.class, RETURNS_DEEP_STUBS);
+				ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS); 
 
-			Sphere3D sphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
+				double radius=2.0;
+				Point3D mittelPunkt = new Point3D(0.0,0.0,0.0);
+				Sphere3D testSphere = new Sphere3D(mittelPunkt,radius,ColorValue.BLACK,testShading,testMaterial);
+				
+				LightRay testLightRay = new LightRay(new Point3D(-2*radius,0.0,0.0),new Point3D(-radius,0.0,0.0));
 
-			Point3D cameraPos = new Point3D(-5.0, 0.0, 0.0);
-			Point3D screenPoint = new Point3D(0.0, 0.0, 0.0);
-			Dir3D direction = Util.difference(screenPoint, cameraPos);
+				// Abstand in Ursprungslage
+				testSphere.move(new Dir3D (0.0,0.0,0.0));
+				Intersection testIntersection = testSphere.intersectRay(testLightRay);
+				assertEquals (2.0,testIntersection.getParameter());
 
-			LightRay testRay = new LightRay(cameraPos, direction);
+				// Verschieben
+				testSphere.move(new Dir3D (1.0,0.0,0.0));
+				testIntersection = testSphere.intersectRay(testLightRay);
+				assertEquals (3.0,testIntersection.getParameter());
 
-			Intersection result = sphere.intersectRay(testRay);
-			assertEquals(result.getParameter(), Double.MAX_VALUE, 0.00001);
+				// Zurückbewegen
+				testSphere.move(new Dir3D (-1.0,0.0,0.0));
+				testIntersection = testSphere.intersectRay(testLightRay);
+				assertEquals (2.0,testIntersection.getParameter());
+			}
 		}
 	}
+	
 
-	@Nested
-	class UnitTest_DoesIntersectRay{
-		@Test
-		public void testDoesIntersectRay() {
-			double radius = 5.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
-
-			Point3D mittelPunkt = new Point3D(3*radius, 0.0 , 0.0);
-			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
-			LightRay testRay = new LightRay();
-			
-			boolean check = testSphere.doesIntersectRay(testRay);
-			
-			assertTrue(check);	
-		}
-		
-		@Test
-		public void testDoesNotIntersectRay() {
-			double radius = 5.0;
-			Point3D mittelPunkt = new Point3D(3*radius, 4*radius , 0.0);
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
-
-			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
-			LightRay testRay = new LightRay();
-			
-			boolean check = testSphere.doesIntersectRay(testRay);
-			assertFalse(check);	
-		}
-		@Test
-		public void testDoesNotIntersectRay_02() {
-			double radius = 5.0;
-			ReflectedColor testShading = new BasicColorCalculation(0.1);
-
-			Point3D mittelPunkt = new Point3D(3*radius, 4*radius , 0.0);
-			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading);
-			LightRay testRay = new LightRay(new Point3D(),new Dir3D(10.0, 0.0, 0.0));
-			
-			boolean check = testSphere.doesIntersectRay(testRay);
-			assertFalse(check);	
-		}
-	}
+	/**
+	 * @author Johanns Widder
+	 */
+//	@Nested
+//	class Test_DoesIntersectRay{
+//		/**
+//		 * Situation:
+//		 * 
+//		 * Schnitt mit einer Kugel im Abstand 2*Radius. Der Strahl zeigt direkt auf die Kugel.
+//		 */
+//		@Test
+//		@ExtendWith(MockitoExtension.class)
+//		public void test_LightRayIntersectsSphere() {
+//			double radius = 5.0;
+//			Scene testScene= Mockito.mock(Scene.class, RETURNS_DEEP_STUBS);
+//
+//			ColorCalculation testShading = new BasicColorCalculation(0.1,0.5,testScene);
+//
+//			Point3D mittelPunkt = new Point3D(3*radius, 0.0 , 0.0);
+//			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
+//			LightRay testRay = new LightRay(new Point3D(0.0,0.0,0.0),new Dir3D(1.0,0.0,0.0));
+//			
+//			boolean doesIntersect = testSphere.intersectRay(testRay).getIntersectionPoint()==null;
+//			
+//			assertTrue(doesIntersect);	
+//		}
+//		
+//		/**
+//		 * Der Lichtstrahl berührt die Kugel tangential.
+//		 */
+//		@Test
+//		@ExtendWith(MockitoExtension.class)
+//		public void test_LightRayTouchesSphere() {
+//			
+//			double radius = 5.0;
+//			
+//			Point3D mittelPunkt = new Point3D(radius, radius , 0.0);
+//			ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS);
+//			Material testMaterial = Mockito.mock(Material.class,RETURNS_DEEP_STUBS);
+//			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+//
+//			LightRay testLightRay = new LightRay(new Point3D(0.0,0.0,0.0),new Dir3D(1.0,0.0,0.0));
+//			
+//			boolean doesIntersect = testSphere.doesIntersectRay(testLightRay);
+//			
+//			assertTrue(doesIntersect);	
+//		}
+//		
+//		/**
+//		 * Der Strahl schneidet die Kugel nicht, sondern get daneben vorbei.
+//		 */
+//		@Test
+//		@ExtendWith(MockitoExtension.class)
+//		public void test_LightRayTouchesSphereBehind() {
+//			// Arrange
+//			double radius = 5.0;
+//			Point3D mittelPunkt = new Point3D(-1*radius, radius , 0.0);
+//			ColorCalculation testShading = Mockito.mock(ColorCalculation.class,RETURNS_DEEP_STUBS);
+//			Material testMaterial = Mockito.mock(Material.class,RETURNS_DEEP_STUBS);
+//
+//			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,testMaterial);
+//			LightRay testRay = new LightRay(new Point3D(0.0,0.0,0.0),new Dir3D(1.0,0.0,0.0));
+//
+//			// Act
+//			boolean doesIntersect = testSphere.doesIntersectRay(testRay);
+//			
+//			// Assert
+//			assertFalse(doesIntersect);	
+//		}
+//		
+//		/**
+//		 * Der Mittelpunkt des Strahl liegt innerhalb der Kugel.
+//		 * 
+//		 * Es wird false zurückgegeben, weil dies im Normalfall nicht als Schnittpunkt behandelt wird.
+//		 * dazu wird aber ein gültiger Schnittpunkt zurückgegeben. So kann man diesen Fall unterscheiden.    
+//		 *  
+//		 * TODO Klären, Wie ist der Fall zu behandeln, dass Startpunkt des Strahl innerhalb der Kugel liegt.
+//		 */
+//		@Test
+//		@ExtendWith(MockitoExtension.class)
+//		public void test_LightRayStartsWithinSphere() {
+//			double radius = 1.0;
+//			Scene testScene= Mockito.mock(Scene.class, RETURNS_DEEP_STUBS);
+//
+//			ColorCalculation testShading = new BasicColorCalculation(0.1,0.5,testScene);
+//
+//			Point3D mittelPunkt = new Point3D(0.0, 0.0, 0.0);
+//			Sphere3D testSphere = new Sphere3D(mittelPunkt, radius, ColorValue.GREEN,testShading,new Material());
+//			LightRay testRay = new LightRay(mittelPunkt,new Dir3D(1.0, 0.0, 0.0));
+//			
+//			boolean doesIntersect = testSphere.doesIntersectRay(testRay);
+//			
+//			assertFalse(doesIntersect);	
+//		}
+//		/**
+//		 * Der Mittelpunkt des Strahl liegt innerhalb der Kugel.
+//		 * 
+//		 * Es wird false zurückgegeben, weil dies im Normalfall nicht als Schnittpunkt behandelt wird.
+//		 * dazu wird aber ein gültiger Schnittpunkt zurückgegeben. So kann man diesen Fall unterscheiden.    
+//		 *  
+//		 * TODO Klären, Wie ist der Fall zu behandeln, dass Startpunkt des Strahl innerhalb der Kugel liegt.
+//		 */
+//		@Test
+//		@ExtendWith(MockitoExtension.class)
+//		public void test_ShereBehindStartLightray() {
+//			// TODO Test Sphere hinter Strahl ausprogrammieren. 
+//			assertFalse(false);
+//		}
+//	}
 }

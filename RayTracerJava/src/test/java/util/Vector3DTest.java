@@ -39,9 +39,9 @@ public class Vector3DTest {
 
 			Vector3D testVector3d = new Vector3D(testPoint, testDir);
 
-			assertEquals(-1.0, testVector3d.getBasis().xPos, 0.0001);
-			assertEquals(0.0, testVector3d.getBasis().yPos, 0.0001);
-			assertEquals(1.0, testVector3d.getBasis().zPos, 0.0001);
+			assertEquals(-1.0, testVector3d.getBasis().getxPos(), 0.0001);
+			assertEquals(0.0, testVector3d.getBasis().getyPos(), 0.0001);
+			assertEquals(1.0, testVector3d.getBasis().getzPos(), 0.0001);
 
 			assertEquals(testVector3d.getDirection().getxDir(), 0.0);
 			assertEquals(testVector3d.getDirection().getyDir(), 1.0);

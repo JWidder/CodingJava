@@ -10,6 +10,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import generator.Intersection;
+
+/**
+ * @author johan
+ *
+ */
 public class AmbientColorTest {
 
 	@Nested
@@ -21,7 +27,7 @@ public class AmbientColorTest {
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
 			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,110,120));
 		
-			ReflectedColor testAmbientColor = new AmbientColor(0.5);
+			ColorCalculation testAmbientColor = new AmbientColor(0.5);
 			// Run 
 			Color result = testAmbientColor.getColor(refIntersection, null);
 
@@ -38,7 +44,7 @@ public class AmbientColorTest {
 			Intersection refIntersection = Mockito.mock(Intersection.class, RETURNS_DEEP_STUBS);
 			when(refIntersection.getRefElement().getValueColor()).thenReturn(new Color(100,110,120));
 		
-			ReflectedColor testAmbientColor = new AmbientColor(0.0);
+			ColorCalculation testAmbientColor = new AmbientColor(0.0);
 			// Run 
 			Color result = testAmbientColor.getColor(refIntersection, null);
 

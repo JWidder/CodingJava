@@ -1,5 +1,8 @@
 package util;
 
+import generator.Intersection;
+import scene.Scene;
+
 /**
  * Ermittelt die Farbe des reflektierten Strahls
  * 
@@ -28,17 +31,21 @@ package util;
  * 
  * @author Johannes Widder
  */
-public class BasicColorCalculation implements ReflectedColor {
-	ReflectedColor ambientColor; 
+public class BasicColorCalculation implements ColorCalculation {
+	ColorCalculation ambientColor; 
+	ColorCalculation reflectedColor;
+	ColorCalculation shadeColor;
+	Scene scene;
 	
 	/**
-	 * @param refSpectacular
-	 * @param refDiffuse
 	 * @param refAmbient
-	 * @param alpha
+	 * @param inScene 
 	 */
-	public BasicColorCalculation(double refAmbient) {
+	public BasicColorCalculation(double refAmbient,double refSpecular,Scene inScene ) {
 		this.ambientColor=new AmbientColor(refAmbient);
+		this.reflectedColor=new ReflectedColor();
+		this.shadeColor=new ShadowColor(inScene, refSpecular);
+		this.scene=inScene;
 	}
 	
 	/**
@@ -50,7 +57,10 @@ public class BasicColorCalculation implements ReflectedColor {
 	@Override
 	public Color getColor(Intersection inIntersection,Color inColor) {
 		Color result = this.ambientColor.getColor(inIntersection, null);
+		Color debugReflectedColor=this.reflectedColor.getColor(inIntersection, inColor);
+		result.addColor(debugReflectedColor);
+		Color debugShadowColor=this.shadeColor.getColor(inIntersection,null);
+		result.addColor(debugShadowColor);
 		return result;
-		
 	}
 }

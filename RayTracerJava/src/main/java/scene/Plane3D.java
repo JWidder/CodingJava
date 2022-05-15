@@ -1,15 +1,17 @@
 package scene;
 
+import generator.Intersection;
 import util.Color;
 import util.ColorValue;
 import util.Dir3D;
-import util.Intersection;
 import util.Point3D;
+import util.Util;
 import util.Vector3D;
 
 /**
  * @author Johannes Widder
  *
+ * TODO Plane3D fertig stellen
  */
 public class Plane3D extends SceneElement {
 	Dir3D dir_1;
@@ -18,8 +20,6 @@ public class Plane3D extends SceneElement {
 	Dir3D normal;
 	ColorValue valueColors;
 
-	
-	
 	/**
 	 * @param base
 	 * @param normal
@@ -29,8 +29,6 @@ public class Plane3D extends SceneElement {
 		this.base = base;
 		this.normal = normal;
 	}
-
-
 
 	/**
 	 * @param dir_1
@@ -42,36 +40,22 @@ public class Plane3D extends SceneElement {
 		this.dir_1 = dir_1;
 		this.dir_2 = dir_2;
 		this.base = base;
+		this.normal=Util.normalVector(dir_1, dir_2);
 	}
 
 	@Override
 	public Intersection intersectRay(LightRay inRay) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
-	@Override
-	public Vector3D getNormal(Point3D inPoint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	@Override
 	public Color getValueColor() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
-	public ISceneElement move(Dir3D dir) {
+	public boolean doesIntersectRay(LightRay inRay) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
-
 }

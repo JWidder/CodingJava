@@ -1,6 +1,6 @@
 package util;
 
-import scene.LightRay;
+import generator.Intersection;
 
 /**
  * @author Johannes Widder
@@ -101,25 +101,43 @@ public class Util{
 	}
 	
 	
+	
 	/**
-	 * Beschreibung des Algoritmus zur Berechnung des reflektierten Strahls. 
+	 * Beschreibung des Algorithmus zur Berechnung des reflektierten Strahls. 
+	 *
 	 * https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
 	 * 
-	 * @param lightRay 
-	 * @param nextIntersection
+	 * @param nextIntersection Schnittpunkt an dem die Reflektionsrichtung berechnet werden muss. 
+	 * @param inDirection Hier wird der Strahl verwendet, der in dem Schnittpunkt eingetragen ist  
 	 * 
-	 * @return {@link scene.LightRay} reflected ray
+	 * @return
 	 */
-	public static LightRay getNextRay(LightRay lightRay, Intersection nextIntersection) {
-
-		Point3D point = nextIntersection.getIntersectionPoint();
-		Dir3D n = nextIntersection.getRefElement().getNormal(point).getDirection().normalize();
-		Dir3D ri = lightRay.getDirection().normalize();
+	public static Dir3D calculateReflectedDir(Intersection nextIntersection) {
+		return Util.calculateReflectedDir(nextIntersection,nextIntersection.getInRay().getDirection());
+	}
+	
+		
+	/**
+	 * @param nextIntersection
+	 * @param inDirection
+	 * @return Richtung des reflektierten Strahls
+	 */
+	public static Dir3D calculateReflectedDir(Intersection nextIntersection, Dir3D inDirection ) {
+		Dir3D n = nextIntersection.getNormale().normalize();
+		Dir3D ri = inDirection.normalize();
 		double f = Util.dot(ri, n);
 		// https://www.it-swarm.com.de/de/java/wie-erreicht-man-eine-verkettung-von-methoden-java/1043854209/
 		Dir3D rn = ri.minus(n.scale(f).scale(2.0));
+		return rn;
+	}
+	
+	/**
+	 * Koordinatentransformation
+	 * Eulersche Winkel
+	 * 
+	 */
+	void KoordinatenTransformation(Dir3D inVektor,double phix,double phiy,double phiz) {
 		
-		LightRay newRay = new LightRay(nextIntersection.getIntersectionPoint(),rn);
-		return newRay;
-	}	
+	}
+		
 }

@@ -15,9 +15,9 @@ public class RayTracerTest {
 	 */
 	@Test
 	public void testMain() throws Exception {
-		// TODO Test erstellen
+		// XXX Test erstellen
 		String[] testData=new String[3];
-		RayTracer.main(testData);
+		// RayTracer.main(testData);
 		assertEquals(2,2);
 	}
 

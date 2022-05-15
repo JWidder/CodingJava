@@ -1,5 +1,7 @@
 package util;
 
+import generator.Intersection;
+
 /**
  * Die Klasse AmbientColor ermittelt den richtungsunabhängigen Beitrag zur Farbe 
  * des reflektierten Strahls.    
@@ -13,10 +15,13 @@ package util;
  * 
  * @author Johannes Widder
  */
-public class AmbientColor implements ReflectedColor{
+public class AmbientColor implements ColorCalculation{
 
 	private double ambientFactor;
 	
+	/**
+	 * @param inAmbientFactor
+	 */
 	public AmbientColor(double inAmbientFactor) {
 		super();
 		this.ambientFactor = inAmbientFactor;
