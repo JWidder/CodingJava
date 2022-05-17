@@ -67,6 +67,18 @@ public class Util{
 		wert+=a.getzDir()*b.getzDir();
 		return wert;
 	}
+	
+	/**
+	 * 
+	 */
+	public static Dir3D crossProduct(Dir3D a,Dir3D b)
+	{
+		Dir3D result = new Dir3D();
+		result.setxDir(a.getyDir()*b.getzDir()-a.getzDir()*b.getxDir());
+		result.setyDir(a.getzDir()*b.getxDir()-a.getxDir()*b.getzDir());
+		result.setzDir(a.getxDir()*b.getyDir()-a.getyDir()*b.getxDir());
+		return result;
+	}
 
 	/**
 	 * Cross product is used to calculate the normal vector:
@@ -139,5 +151,7 @@ public class Util{
 	void KoordinatenTransformation(Dir3D inVektor,double phix,double phiy,double phiz) {
 		
 	}
+	
+	
 		
 }

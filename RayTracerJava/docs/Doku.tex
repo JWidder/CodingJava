@@ -1,0 +1,81 @@
+%% Basierend auf einer TeXnicCenter-Vorlage von Mark M�ller
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% W�hlen Sie die Optionen aus, indem Sie % vor der Option entfernen  
+% Dokumentation des KOMA-Script-Packets: scrguide
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optionen zum Layout des Briefs                                    %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass%																			
+%[DINmtext]								% mehr Platz f�r Text f�r DIN C6-Umschl�ge
+%[SN]											% schweizer DIN-Formatierung
+%[SNleft]									% schweizer Briefe mit Anschrift links
+%[fontsize=10pt]					% Schriftgr��e (11pt, 12pt (Standard))
+{scrlttr2}		
+													
+\KOMAoptions{%
+%headsepline=on,					% Trennline zum Seitenkopf der Folgeseiten
+%footsepline=on,					% Trennline zur Fu�zeile
+%pagenumber=headcenter,		% Position der Seitennummer, s. scrguide 6.2
+%fromalign=center,				% Position des Absenders (right)	 
+%fromrule=afteradress,		% Linie innerhalb des Absenders (aftername)
+%fromphone=on, 						% Telefonnummer des Absenders wird gezeigt
+%fromemail=on, 						% Emailadresse des Absenders wird gezeigt
+%fromfax=on,							% Faxnummer des Absenders wird gezeigt
+%fromurl=on,							% URL des Absenders wird gezeigt
+%addrfield=off,						% Adressfeld wird nicht angezeigt
+%backaddress=off,					% Absenderzeile im Adressfeld wird nicht angezeigt
+%foldmarks=off,						% Falzmarkierung werden nicht gesetzt
+%numericaldate=on,				% rein nummerisches Datum wird angezeigt
+%subject=titled						% Betreff wird mit "Betrifft: " versehen
+%parskip=half*,						% Steuerung Absatzformatierung, s. scrguide 6.2
+%enlargefirstpage=on			% l��t evtl. mehr Text auf der Seite zu (s.a. enlargethispage{})
+}
+
+%\pagestyle{headings}			% Schaltet Kopfzeilen der Folgeseiten an
+
+
+%% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+
+\usepackage{lmodern} %Type1-Schriftart f�r nicht-englische Texte
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ihre Absenderangaben, Zuschaltung �ber KOMAoptions, s.o.         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setkomavar{fromname}{Ihr Name}
+\setkomavar{fromaddress}{Ihre Stra�e Nr. \\ PLZ Ort}
+\setkomavar{fromphone}{(Vorwahl) Ihre Nummer}
+\setkomavar{fromemail}{Ihre Emailadresse}
+\setkomavar{backaddress}{Angaben f�r R�cksendeadresse im Adressfeld}
+\setkomavar{signature}{Ihr Name erscheint unter dem Gru�}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Der Briefinhalt                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setkomavar{title}{fetter gro�er Titel}	% Anzeige eines Titels
+\setkomavar{subject}{fetter normalgro�er Betreff}
+%\setkomavar{date}{xx.xx.xxxx} 						% falls nicht das aktuelle Datum gew�nscht						
+
+\begin{document}
+
+%% Adressangaben %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{letter}{Name des Empf�ngers \\ Stra�e\\ PLZ und ORT}
+
+%% Beginn des Brieftextes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\opening{Sehr geehrte Damen und Herren,}% oder andere Anrede einsetzen
+
+Hier schreiben Sie Ihren Brieftext oder f�gen den Text einer Datei mit Hilfe \verb#\input{datei}# ein. 
+
+\closing{Mit freundlichen Gr��en}				% oder anderen Gru� einsetzen										
+%\encl{Anlage 1\\ Anlage 2\\ Anlage 3}	% Anlage(n)
+%\ps PS: Hab ich noch vergessen!			  % Postscriptum 
+
+\end{letter}
+
+\end{document}

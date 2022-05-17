@@ -6,6 +6,8 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -13,6 +15,7 @@ import generator.Intersection;
 import scene.LightRay;
 import scene.Scene;
 import scene.Sphere3D;
+import scene.Triangle3D;
 
 /**
  * @author Johannes Widder
@@ -167,6 +170,23 @@ public class UtilTest {
 		// assert
 		assertEquals(2.0*Math.sqrt(3.0), actual,0.0001);
 	}
+
+    @ParameterizedTest
+    @CsvSource({
+        "1.0, 0.0,0.0, 1.0,0.0,0.0 , 0.0 ,0.0,0.0", 
+        "1.0, 0.0,0.0, 0.0,1.0,0.0 , 0.0 ,0.0,1.0", 
+        "0.0, 1.0,0.0, 1.0,0.0,0.0 , 0.0 ,0.0,-1.0", 
+    })
+    void testCrossProduct(double ax, double ay, double az, double bx, double by, double bz, double rx, double ry, double rz) {
+    	Dir3D a = new Dir3D(ax,ay,az);
+    	Dir3D b = new Dir3D(bx,by,bz);
+
+    	Dir3D result = Util.crossProduct(a,b);
+    	
+        assertEquals(rx, result.getxDir());
+        assertEquals(ry, result.getyDir());
+        assertEquals(rz, result.getzDir());
+    }
 
 //	@Test
 //	public void testNormalVector() throws Exception {
