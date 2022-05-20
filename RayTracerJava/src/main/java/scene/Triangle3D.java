@@ -6,6 +6,7 @@ import util.ColorCalculation;
 import util.ColorValue;
 import util.Material;
 import util.Point3D;
+import util.Util;
 import util.Dir3D;
 
 public class Triangle3D extends SceneElement{
@@ -29,13 +30,11 @@ public class Triangle3D extends SceneElement{
 	    Dir3D v0v1 = new Dir3D(this.p1,this.p2); 
 	    Dir3D v0v2 = new Dir3D(this.p1,this.p2);
 	    // no need to normalize
-//	    Vec3f N = v0v1.crossProduct(v0v2); // N 
-//	    float area2 = N.length(); 
-//	 
-//	    // Step 1: finding P
-//	 
-//	    // check if ray and plane are parallel ?
-//	    float NdotRayDirection = N.dotProduct(dir); 
+	    Dir3D N = Util.crossProduct(v0v1,v0v2);  
+	    double area2 = N.len(); 
+	    // Step 1: finding P
+	    // check if ray and plane are parallel ?
+	    double NdotRayDirection = Util.dot(N,inRay.getDirection()); 
 //	    if (fabs(NdotRayDirection) < kEpsilon) // almost 0 
 //	        return false; // they are parallel so they don't intersect ! 
 //	 

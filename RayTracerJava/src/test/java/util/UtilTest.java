@@ -173,9 +173,9 @@ public class UtilTest {
 
     @ParameterizedTest
     @CsvSource({
-        "1.0, 0.0,0.0, 1.0,0.0,0.0 , 0.0 ,0.0,0.0", 
-        "1.0, 0.0,0.0, 0.0,1.0,0.0 , 0.0 ,0.0,1.0", 
-        "0.0, 1.0,0.0, 1.0,0.0,0.0 , 0.0 ,0.0,-1.0", 
+        "1.0, 0.0, 0.0, 1.0, 0.0, 0.0 , 0.0 , 0.0,  0.0", 
+        "1.0, 0.0, 0.0, 0.0, 1.0, 0.0 , 0.0 , 0.0,  1.0", 
+        "0.0, 1.0, 0.0, 1.0, 0.0, 0.0 , 0.0 , 0.0, -1.0", 
     })
     void testCrossProduct(double ax, double ay, double az, double bx, double by, double bz, double rx, double ry, double rz) {
     	Dir3D a = new Dir3D(ax,ay,az);
